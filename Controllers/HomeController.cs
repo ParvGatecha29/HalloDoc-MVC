@@ -18,37 +18,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult SubmitRequest()
-    {
-        return View();
-    }
-
-    public IActionResult PatientLogin()
-    {
-        return View();
-    }
-
-    public IActionResult ForgotPassword()
-    {
-        return View();
-    }
-
-    public IActionResult PatientRequest()
-    {
-        return View();
-    }
-
-    public IActionResult ConciergeRequest()
-    {
-        return View();
-    }
-
-    public IActionResult BusinessRequest()
-    {
-        return View();
-    }
-
-    public IActionResult FamilyRequest()
+    public IActionResult PatientDashboard()
     {
         return View();
     }

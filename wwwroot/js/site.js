@@ -46,3 +46,36 @@ function pass() {
     e.classList.toggle("bi-eye-slash");
     e.classList.toggle("bi-eye");
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var tableRows = document.querySelectorAll('#responsiveTable tbody .table-row');
+
+    function toggleDetails() {
+        if (window.innerWidth <= 600) {
+            var details = this.querySelectorAll('.mobile-hide');
+            details.forEach(function (detail) {
+                detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+            });
+        }
+    }
+
+    tableRows.forEach(function (row) {
+        row.addEventListener('click', toggleDetails);
+    });
+
+    // Reset when resizing
+    window.addEventListener('resize', function () {
+        var details = document.querySelectorAll('.mobile-hide');
+        if (window.innerWidth > 600) {
+            // Reset display property for desktop view
+            details.forEach(function (detail) {
+                detail.style.removeProperty('display');
+            });
+        } else {
+            // Apply correct display property for mobile view
+            details.forEach(function (detail) {
+                detail.style.display = 'none';
+            });
+        }
+    });
+});

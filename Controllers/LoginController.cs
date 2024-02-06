@@ -1,18 +1,18 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HalloDoc.Models;
+using HalloDoc.DataContext;
 
 namespace HalloDoc.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _context;
 
-    public LoginController(ILogger<HomeController> logger)
+    public LoginController(ApplicationDbContext context)
     {
-        _logger = logger;
+        _context = context;
     }
-
 
     public IActionResult PatientLogin()
     {
@@ -22,6 +22,21 @@ public class LoginController : Controller
     public IActionResult ForgotPassword()
     {
         return View();
+    }
+
+    [HttpPost]
+    public ActionResult PatientLogin(Login model)
+    {
+        var user = _context.Aspnetusers.FirstOrDefault(u=>
+            u.Username == model.Username &&
+            u.Passwordhash == model.Password);
+        if (user != null) {
+            return RedirectToAction("PatientDashboard", "Home");
+        }
+        else
+        {
+            return RedirectToAction("PatientLogin", "Login");
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
