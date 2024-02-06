@@ -1,0 +1,132 @@
+﻿
+@model HalloDoc.Views.Home.PatientDashboardModel
+@{
+    Layout = "_none";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 navBar w-100">
+            <nav class="navbar navbar-expand-md flex-column d-flex">
+                <div class="container-fluid flex-nowrap">
+                    <div class="d-flex">
+                        <button class=" btn btn-outline-info d-md-none d-block" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                                aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="material-symbols-outlined">
+                                menu
+                            </span>
+                        </button>
+                        <img src="/images/hallodoc.png" alt="logo" class="navLogo">
+                    </div>
+
+                    <div class="d-inline d-flex align-items-center justify-content-center">
+                        <div class=" d-inline justify-content-center align-items-center d-none d-md-flex">
+                            <p class="mx-3 my-0">
+                                Welcome <strong>Tests Testing</strong>
+                            </p>
+                            <button class="btn btn-outline-info ms-auto my-auto darkBtn mx-3" type="button">
+                                Logout
+                            </button>
+                        </div>
+
+                        <button class="btn btn-outline-info d-md-none d-block py-1 px-2 mx-1">
+                            <span class="material-symbols-outlined">
+                                logout
+                            </span>
+                        </button>
+                        <button class="btn btn-outline-info ms-auto my-auto darkBtn btn-toggle mx-3"
+                                type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor" class="bi bi-moon" viewBox="0 0 16 16">
+                                <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse w-100" id="navbarTogglerDemo01">
+                    <ul class="nav nav-tabs navbar-nav me-auto mb-2 mb-lg-0" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab"
+                                    data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
+                                    aria-selected="true" style="color:inherit">
+                                Dashboard
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false"
+                                    style="color:inherit">
+                                Profile
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active p-4 tab" id="dashboard" role="tabpanel"
+             aria-labelledby="dashboard-tab">
+            <h2>Medical History</h2>
+            <div class="w-100 text-end d-flex justify-content-end p-3 bgdiv">
+                <button class="d-md-none d-block btn btn-outline-info p-0 py-1 px-2">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                </button>
+                <button class="btn btn-outline-info ms-auto my-auto darkBtn mx-3 d-none d-md-block"
+                        type="button">
+                    Create New Request
+                </button>
+            </div>
+
+
+
+            <table id="responsiveTable">
+                <thead>
+                    <tr>
+                        <th>Created Date</th>
+                        <th class="mobile-hide">Current Status</th>
+                        <th class="mobile-hide">Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row">
+                        <td data-label="Created Date">01/01/2024</td>
+                        <td class="mobile-hide" data-label="Current Status">Active</td>
+                        <td class="mobile-hide" data-label="Document">Document1.pdf</td>
+                    </tr>
+                    <!-- More rows as needed -->
+                    <tr class="table-row">
+                        <td data-label="Created Date">01/01/2024</td>
+                        <td class="mobile-hide" data-label="Current Status">Active</td>
+                        <td class="mobile-hide" data-label="Document">Document1.pdf</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+        <div class="tab-pane fade p-4 tab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <p>
+                Lorem ipsum dolor sit
+                amet consectetur adipisicing elit. Corporis illum quisquam, rerum, minus et expedita sapiente
+                reprehenderit autem maxime adipisci unde aliquam provident id beatae explicabo odio magni. Nobis
+                suscipit facilis aut quam consequuntur neque dolore voluptate enim explicabo iusto illo deserunt sed
+                architecto incidunt atque, qui, pariatur nemo quaerat!
+            </p>
+        </div>
+    </div>
+</div>
+<div class="w-100 bg-black">
+    <footer class="text-end px-3">
+        <a href="#" class="text-white text-decoration-none fs-6">
+            Terms and
+            Conditions
+        </a>
+        <span class="text-white-50 mx-3">|</span>
+        <a href="#" class="text-white text-decoration-none fs-6">Privacy Policy</a>
+    </footer>
+</div>

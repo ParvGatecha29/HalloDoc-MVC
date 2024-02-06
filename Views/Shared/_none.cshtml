@@ -27,5 +27,24 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $(".redirect-to").on("click", function () {
+                var pageName = $(this).data("page");
+                var controller = $(this).data("controller");
+                RedirectToPage("/" + controller + "/" + pageName);
+            });
+
+            function RedirectToPage(url) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function () {
+                        window.location.href = url;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
