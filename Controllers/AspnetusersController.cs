@@ -19,6 +19,7 @@ namespace HalloDoc.Controllers
             _context = context;
         }
 
+
         // GET: Aspnetusers
         public async Task<IActionResult> Index()
         {

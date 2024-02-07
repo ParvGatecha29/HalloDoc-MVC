@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc", "HalloDoc.csproj", "{D810B110-46E1-42F3-9F37-2CE4C610F93B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalloDoc-Data", "..\HalloDoc-Data\HalloDoc-Data.csproj", "{5C0B2F44-E2D1-45A4-B64B-1C35A3A5DEC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HallocDoc-Business", "..\HallocDoc-Business\HallocDoc-Business.csproj", "{E9631243-5696-466E-8FA3-C67EB19979D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D810B110-46E1-42F3-9F37-2CE4C610F93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D810B110-46E1-42F3-9F37-2CE4C610F93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D810B110-46E1-42F3-9F37-2CE4C610F93B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C0B2F44-E2D1-45A4-B64B-1C35A3A5DEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C0B2F44-E2D1-45A4-B64B-1C35A3A5DEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C0B2F44-E2D1-45A4-B64B-1C35A3A5DEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C0B2F44-E2D1-45A4-B64B-1C35A3A5DEC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9631243-5696-466E-8FA3-C67EB19979D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9631243-5696-466E-8FA3-C67EB19979D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9631243-5696-466E-8FA3-C67EB19979D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9631243-5696-466E-8FA3-C67EB19979D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

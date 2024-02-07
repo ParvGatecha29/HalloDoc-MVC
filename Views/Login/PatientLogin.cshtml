@@ -6,6 +6,9 @@
 <div class="container-fluid d-flex p-0">
     <script src="https://use.fontawesome.com/f59bcd8580.js"></script>
     <div class="container-fluid">
+        <button class="position-absolute top-0 end-0 m-3 p-2 rounded btn btn-outline-info btn-toggle">
+            <i class="bi bi-moon"></i>
+        </button>
         <div class="row no-gutters justify-content-center">
             <div class="col-md-8 col-12 col-lg-6 p-5 d-flex flex-column align-items-center justify-content-center min-vh-100 rightcol">
                 <div class="bg"></div>
@@ -18,14 +21,13 @@
                     <p class="fs-2 pb-3 fw-semibold">Login To Your Account</p>
                 </div>
                 <div class="form-style">
-                    <form action="/Login/PatientLogin" method="post">
                         <div class="form-group pb-3 form-floating d-flex d-inline">
-                            <input type="text" placeholder="Username" class="form-control" id="exampleInputEmail1"
+                            <input type="text" placeholder="Username" class="form-control" id="user"
                                    aria-describedby="emailHelp" name="Username">
                             <span class="photo">
                                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                             </span>
-                            <label for="exampleInputEmail1" class="floating-label">Username</label>
+                            <label for="user" class="floating-label">Username</label>
                         </div>
                         <div class="form-group pb-3 form-floating d-flex d-inline">
                             <input type="password" placeholder="Password" class="form-control"
@@ -33,12 +35,14 @@
                             <span class="photo" onclick="pass()">
                                 <i class="bi bi-eye" aria-hidden="true" id="eye"></i>
                             </span>
-                            <label for="exampleInputPassword1" class="floating-label">Password</label>
+                            <label for="pass" class="floating-label">Password</label>
                         </div>
                         <div class="pb-2">
-                            <button type="submit" class="btn btn-info w-100 font-weight-bold mt-2">Submit</button>
+                            <button id="btnlogin" class="btn btn-info w-100 font-weight-bold mt-2">Submit</button>
                         </div>
-                    </form>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div><a class="redirect-to" data-page="PatientCreate" data-controller="Login">Create New Account</a></div>
+                    </div>
                     <div class="d-flex align-items-center justify-content-center">
                         <div><a class="redirect-to" data-page="ForgotPassword" data-controller="Login">Forgot Password?</a></div>
                     </div>
@@ -47,3 +51,28 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#btnlogin').click(function () {
+            var data = {
+                Username: $('#user').val(),
+                Password: $('#pass').val()
+            };
+
+            $.ajax({
+                url:'@Url.Action("PatientLogin","Login")',
+                type:'POST',
+                contentType:'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.success) {
+                        window.location.href=result.redirectUrl;
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                }
+            })
+        })
+    })
+</script>

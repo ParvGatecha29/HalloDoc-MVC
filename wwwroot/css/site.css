@@ -22,6 +22,10 @@ html {
   /* both supported */
 }
 
+.btn-toggle{
+    z-index:1111;
+}
+
 body {
   --text-color: #222;
   --bkg-color: #fff;
