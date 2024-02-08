@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HalloDoc.DataContext;
-using HalloDoc.DataModel;
+using HalloDocDAL.Data;
+using HalloDocDAL.Models;
 
 namespace HalloDoc.Controllers
 {
@@ -29,7 +29,7 @@ namespace HalloDoc.Controllers
         }
 
         // GET: Aspnetusers/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, bool i)
         {
             if (id == null || _context.Aspnetusers == null)
             {
@@ -37,7 +37,7 @@ namespace HalloDoc.Controllers
             }
 
             var aspnetuser = await _context.Aspnetusers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => i);
             if (aspnetuser == null)
             {
                 return NotFound();

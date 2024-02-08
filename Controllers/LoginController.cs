@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using HalloDoc.Models;
-using HalloDoc.DataContext;
+using HalloDocDAL.Data;
 using Newtonsoft.Json;
-using HalloDoc.DataModel;
+using HalloDocDAL.Models;
+using System.ComponentModel.DataAnnotations;
+using HalloDocDAL.Model;
 
 namespace HalloDoc.Controllers;
 
@@ -34,7 +35,7 @@ public class LoginController : Controller
     public JsonResult PatientLogin([FromBody] Login model)
     {
         var user = _context.Aspnetusers.FirstOrDefault(u=>
-            u.Username == model.Username &&
+            u.Email == model.Email &&
             u.Passwordhash == model.Password);
         if (user != null) {
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "Home") });
@@ -44,12 +45,12 @@ public class LoginController : Controller
             return Json(new { success = false, message = "Invalid Username or Password" });
         }
     }
-
+    
     public async Task<JsonResult> PatientSignUp([FromBody] Register model)
     {
         if(ModelState.IsValid)
         {
-            if(model.password != model.confirmpassword)
+            if(model.password != model.confirmpassword && model.Email == "" && model.password=="")
             {
                 return Json(new { success = false, message = "Passwords donot match" });
             }
@@ -57,11 +58,11 @@ public class LoginController : Controller
             var user = new Aspnetuser
             {
                 Id = Guid.NewGuid().ToString(),
-                Username = model.username,
+                Username = model.Email,
+                Email = model.Email,
                 Createddate = DateTime.Now,
                 Passwordhash = model.password,
- 
-        };
+            };
 
             _context.Aspnetusers.Add(user);
             await _context.SaveChangesAsync();

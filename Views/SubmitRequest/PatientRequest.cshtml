@@ -1,8 +1,8 @@
-﻿@page
+﻿
 @model HalloDoc.Views.Home.PatientRequestModel
 @{
 }
-<div class="container-fluid" style="min-height: 100vh;">
+<div class="container-fluid pb-5" style="min-height: 100vh;">
     <div class="row justify-content-center">
         <div class="col-10 col-md-8 justify-content-end">
             <button class="float-end my-4 btn btn-outline-info backBtn redirect-to" data-page="SubmitRequest" data-controller="SubmitRequest">
@@ -57,10 +57,26 @@
                         <div class="form-floating mb-3 h-100">
                             <input type="tel" class="form-control h-100" id="patientTel" placeholder="Phone Number">
                         </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-6 passwordfields" style="display:none">
+                        <div class="form-floating mb-3" >
+                            <input type="password" class="form-control" id="password" placeholder=" ">
+                            <label for="patientEmail" class=" floating-label">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 passwordfields" style="display:none">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="confirmpassword" placeholder=" ">
+                            <label for="patientEmail" class=" floating-label">Confirm Password</label>
+                        </div>
                     </div>
                     <h6 class="py-3">Patient Location</h6>
                 </div>
+
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
@@ -115,7 +131,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="text-end">
-                        <button class="btn btn-info" style="color:white">
+                        <button class="btn btn-info" id="btnsubmit" style="color:white">
                             Submit
                         </button>
                         <button class="btn btn-info bg-light ">
@@ -156,4 +172,64 @@
         </a><span class="text-white-50 mx-3">|</span><a href="#"
                                                         class="text-white-50 text-decoration-none fs-6">Privacy Policy</a>
     </footer>
+
+    <script>
+        $(document).ready(function () {
+            $('#patientEmail').blur(function () {
+                var email = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("CheckEmailExists","SubmitRequest")',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function (emailNotExists) {
+                        if (emailNotExists) {
+                            $('.passwordfields').show();
+                        }
+                        else {
+                            $('.passwordfields').hide();
+                        }
+                    },
+                    error: function () {
+                        alert("An error occured while checking the email")
+                    }
+                });
+            });
+
+            $('#btnsubmit').click(function () {
+                var data = {
+                    Symptoms: $('#symptoms').val(),
+                    firstName: $('#fname').val(),
+                    lastName: $('#lname').val(),
+                    dob: $('#dob').val(),
+                    email: $('#patientEmail').val(),
+                    phone: $('#patientTel').val(),
+                    street: $('#street').val(),
+                    city: $('#city').val(),
+                    state: $('#state').val(),
+                    zipcode: $('#zipcode').val(),
+                    room: $('#roomNum').val(),
+                    typeid: 1
+                };
+
+                $.ajax({
+                    url: '@Url.Action("PatRequest","SubmitRequest")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        if (result.success) {
+                            alert('Request Cretaed Successfully')
+                            window.location.href = result.redirectUrl;
+                        }
+                        else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('An error occured');
+                    }
+                });
+            });
+        });
+    </script>
 </div>

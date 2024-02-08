@@ -22,10 +22,6 @@ html {
   /* both supported */
 }
 
-.btn-toggle{
-    z-index:1111;
-}
-
 body {
   --text-color: #222;
   --bkg-color: #fff;
@@ -189,6 +185,7 @@ input:focus {
     .patientBtn:hover {
         background-color: transparent !important;
         color: #4367d3;
+        border-color: #4367d3;
     }
 
 .famBtn {

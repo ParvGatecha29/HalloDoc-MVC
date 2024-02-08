@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid" style="min-height: 100vh;">
+<div class="container-fluid pb-5" style="min-height: 100vh;">
     <div class="row justify-content-center">
         <div class="col-10 col-md-8 justify-content-end">
             <button class="float-end my-4 btn btn-outline-info backBtn redirect-to" data-page="SubmitRequest" data-controller="SubmitRequest">
@@ -38,32 +38,32 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="fname" placeholder=" ">
+                        <input type="text" class="form-control" id="cfname" placeholder=" ">
                         <label for="fname" class=" floating-label">First Name</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="lname" placeholder=" ">
+                        <input type="text" class="form-control" id="clname" placeholder=" ">
                         <label for="lname" class=" floating-label">Last Name</label>
                     </div>
                 </div>
                 <div class="col-md-6 z-3">
                     <div class="form-floating mb-3 h-100">
-                        <input type="tel" class="form-control w-100 h-100" id="patientTel"
+                        <input type="tel" class="form-control w-100 h-100" id="cTel"
                                placeholder="Phone Number">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="patientEmail" placeholder=" ">
+                        <input type="email" class="form-control" id="cemail" placeholder=" ">
                         <label for="patientEmail" class=" floating-label">Email address</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="relation" placeholder=" ">
-                        <label for="relation" class=" floating-label">Relation with Patient</label>
+                        <input type="text" class="form-control" id="prop" placeholder=" ">
+                        <label for="relation" class=" floating-label">Hotel/Property</label>
                     </div>
                     <h6 class="py-3">Concierge Location</h6>
                 </div>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="zip" placeholder=" ">
+                            <input type="number" class="form-control" id="zipcode" placeholder=" ">
                             <label for="zip" class=" floating-label">Zip Code</label>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="text-end">
-                        <button class="btn btn-info" style="color:white;">
+                        <button class="btn btn-info" style="color:white;" id="btnsubmit">
                             Submit
                         </button>
                         <button class="btn btn-info bg-light ">
@@ -201,3 +201,48 @@
                                                         class="text-white-50 text-decoration-none fs-6">Privacy Policy</a>
     </footer>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnsubmit').click(function () {
+            var data = {
+                cfirstName:$('#cfname').val(),
+                clastName:$('#clname').val(),
+                cphone:$('#ctel').val(),
+                cemail:$('#cemail').val(),
+                cprop:$('#prop').val(),
+                Symptoms: $('#symptoms').val(),
+                firstName: $('#fname').val(),
+                lastName: $('#lname').val(),
+                dob: $('#dob').val(),
+                email: $('#patientEmail').val(),
+                phone: $('#patientTel').val(),
+                street: $('#street').val(),
+                city: $('#city').val(),
+                state: $('#state').val(),
+                zipcode: $('#zipcode').val(),
+                room: $('#roomNum').val(),
+                typeid: 3
+            };
+
+            $.ajax({
+                url: '@Url.Action("ConRequest","SubmitRequest")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.success) {
+                        alert('Request Cretaed Successfully')
+                        window.location.href = result.redirectUrl;
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occured');
+                }
+            });
+        });
+    });
+</script>
