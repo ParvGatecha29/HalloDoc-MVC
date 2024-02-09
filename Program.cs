@@ -1,4 +1,9 @@
-using HalloDocDAL.Data; 
+using HalloDocBAL.Interfaces;
+using HalloDocBAL.Services;
+using HalloDocDAL.Contacts;
+using HalloDocDAL.Data;
+using HalloDocDAL.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +14,15 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 });
+
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
+builder.Services.AddScoped<IRequestService, RequestService>();
+
 
 var app = builder.Build();
 

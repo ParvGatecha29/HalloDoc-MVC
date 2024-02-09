@@ -181,12 +181,12 @@
                     url: '@Url.Action("CheckEmailExists","SubmitRequest")',
                     type: 'POST',
                     data: { email: email },
-                    success: function (emailNotExists) {
-                        if (emailNotExists) {
-                            $('.passwordfields').show();
+                    success: function (emailExists) {
+                        if (emailExists) {
+                            $('.passwordfields').hide();
                         }
                         else {
-                            $('.passwordfields').hide();
+                            $('.passwordfields').show();
                         }
                     },
                     error: function () {
@@ -208,7 +208,8 @@
                     state: $('#state').val(),
                     zipcode: $('#zipcode').val(),
                     room: $('#roomNum').val(),
-                    typeid: 1
+                    typeid: 1,
+                    pasword: $('#password').val()
                 };
 
                 $.ajax({

@@ -6,16 +6,22 @@ using HalloDocDAL.Model;
 using Microsoft.EntityFrameworkCore;
 using HalloDocDAL.Data;
 using Microsoft.AspNetCore.Identity;
+using HalloDocBAL.Interfaces;
 
 namespace HalloDoc.Controllers;
 
 public class SubmitRequestController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
+    private readonly IRequestService _requestService;
 
-    public SubmitRequestController(ApplicationDbContext context)
+
+    public SubmitRequestController(ApplicationDbContext context,IUserService userService, IRequestService requestService)
     {
         _context = context;
+        _userService = userService;
+        _requestService = requestService;
     }
 
 
@@ -45,10 +51,15 @@ public class SubmitRequestController : Controller
     }
 
     [HttpPost]
-    public JsonResult CheckEmailExists(string email)
+    public async Task<JsonResult> CheckEmailExists(string email)
     {
-        var emailExists = _context.Aspnetusers.Any(x => x.Email == email);
-        return Json(!emailExists);
+        var emailExists = await _userService.CheckUser(email);
+        Console.WriteLine(emailExists != null);
+        if (emailExists != null)
+        {
+            return Json(true);
+        }
+        return Json(false);
     }
 
     [HttpPost]
@@ -57,49 +68,29 @@ public class SubmitRequestController : Controller
         if (ModelState.IsValid)
         {
             var aspuser = new Aspnetuser();
-            if (!(_context.Aspnetusers.Any(x => x.Email == model.email)))
+            var user = new User();
+            if (!(await CheckEmailExists(model.email) == Json(false)))
             {
-                aspuser.Email = model.email;
-                aspuser.Id = Guid.NewGuid().ToString();
-                aspuser.Username = model.email;
-                aspuser.Createddate = DateTime.Now;
-                aspuser.Passwordhash = model.password;
+                var reg = new Register
+                {
+                    Email = model.email,
+                    password = model.password
+                };
+                var result = await _userService.SignUp(reg);
+                aspuser = await _userService.CheckUser(model.email);
 
-                _context.Aspnetusers.Add(aspuser);
-                await _context.SaveChangesAsync();
+                user.Email = model.email;
+                user.Firstname = model.firstName;
+                user.Lastname = model.lastName;
+                user.Aspnetuserid = aspuser.Id;
+                await _userService.AddUser(user);
             }
             else
             {
-                aspuser = _context.Aspnetusers.FirstOrDefault(x => x.Email == model.email);
+                aspuser = await _userService.CheckUser(model.email);
             }
-            var user = new User
-            {
-                Aspnetuserid = aspuser.Id,
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Email = model.email,
-                Mobile = model.phone,
-                Street = model.street,
-                City = model.city,
-                State = model.state,
-                Zipcode = model.zipcode
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
 
-            var request = new Request
-            {
-                Requesttypeid = model.typeid,
-                Userid = user.Userid,
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Phonenumber = model.phone,
-                Email = model.email,
-                Createddate = DateTime.Now
-            };
-
-            _context.Requests.Add(request);
-            await _context.SaveChangesAsync();
+            await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
         }

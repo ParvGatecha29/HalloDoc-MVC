@@ -5,16 +5,17 @@ using Newtonsoft.Json;
 using HalloDocDAL.Models;
 using System.ComponentModel.DataAnnotations;
 using HalloDocDAL.Model;
+using HalloDocBAL.Interfaces;
 
 namespace HalloDoc.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
 
-    public LoginController(ApplicationDbContext context)
+    public LoginController(IUserService userService)
     {
-        _context = context;
+        _userService = userService;
     }
 
     public IActionResult PatientLogin()
@@ -32,12 +33,10 @@ public class LoginController : Controller
     }
 
     [HttpPost]
-    public JsonResult PatientLogin([FromBody] Login model)
+    public async Task<JsonResult> PatientLogin([FromBody] Login model)
     {
-        var user = _context.Aspnetusers.FirstOrDefault(u=>
-            u.Email == model.Email &&
-            u.Passwordhash == model.Password);
-        if (user != null) {
+        var result = await _userService.Login(model);
+        if (result) {
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "Home") });
         }
         else
@@ -50,22 +49,12 @@ public class LoginController : Controller
     {
         if(ModelState.IsValid)
         {
-            if(model.password != model.confirmpassword && model.Email == "" && model.password=="")
+            if(model.password != model.confirmpassword)
             {
                 return Json(new { success = false, message = "Passwords donot match" });
             }
 
-            var user = new Aspnetuser
-            {
-                Id = Guid.NewGuid().ToString(),
-                Username = model.Email,
-                Email = model.Email,
-                Createddate = DateTime.Now,
-                Passwordhash = model.password,
-            };
-
-            _context.Aspnetusers.Add(user);
-            await _context.SaveChangesAsync();
+            var result = await _userService.SignUp(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "Home") });
         }
