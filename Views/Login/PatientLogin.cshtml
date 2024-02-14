@@ -67,6 +67,11 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.success) {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Loggen In",
+                            icon: "success"
+                        });
                         window.location.href=result.redirectUrl;
                     }
                     else {

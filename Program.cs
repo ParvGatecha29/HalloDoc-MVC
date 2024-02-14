@@ -16,11 +16,18 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddSession();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
+builder.Services.AddScoped<IConciergeRepository, ConciergeRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
+builder.Services.AddScoped<IRequestConciergeRepository, RequestConciergeRepository>();
+builder.Services.AddScoped<IRequestBusinessRepository, RequestBusinessRepository>();
+builder.Services.AddScoped<IRequestWiseFilesRepository, RequestWiseFilesRepository>();
 builder.Services.AddScoped<IRequestService, RequestService>();
 
 
@@ -33,7 +40,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

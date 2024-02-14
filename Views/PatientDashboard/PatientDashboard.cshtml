@@ -1,7 +1,8 @@
 ﻿
-@model HalloDoc.Views.Home.PatientDashboardModel
+@model List<HalloDocDAL.Models.Request>
 @{
     Layout = "_none";
+
 }
 <div class="container-fluid">
     <div class="row">
@@ -92,17 +93,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-row">
-                        <td data-label="Created Date">01/01/2024</td>
-                        <td class="mobile-hide" data-label="Current Status">Active</td>
-                        <td class="mobile-hide" data-label="Document">Document1.pdf</td>
-                    </tr>
-                    <!-- More rows as needed -->
-                    <tr class="table-row">
-                        <td data-label="Created Date">01/01/2024</td>
-                        <td class="mobile-hide" data-label="Current Status">Active</td>
-                        <td class="mobile-hide" data-label="Document">Document1.pdf</td>
-                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="table-row">
+                            <td data-label="Created Date">@item.Createddate</td>
+                            @if(item.Status == 1)
+                            {
+                                <td class="mobile-hide" data-label="Current Status">Active</td>
+                            }
+                            else
+                            {
+                                <td class="mobile-hide" data-label="Current Status">Inactive</td>
+                            }
+                            <td class="mobile-hide" data-label="Document">
+                                <button type="button" onclick="location.href='@Url.Action("ViewDocument", "Patientdashboard",new {id = item.Requestid })'">
+                                    View Document
+                                </button>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 

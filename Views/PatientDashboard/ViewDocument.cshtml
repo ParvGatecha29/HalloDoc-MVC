@@ -1,0 +1,75 @@
+﻿@model List<HalloDocDAL.Models.Requestwisefile>
+@{
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="row pt-5 mt-5 m-4 col-10 col-xl-9">
+        <p class="col fs-4 fw-bold ps-5 ms-5 pb-0 mb-0 d-inline">Documents</p>
+        <div class="col me-5 mb-0 text-end">
+            <a class="text-decoration-none text-info rounded border border-info p-2 i-info redirect-to" data-page="PatientDashboard" data-controller="Home">
+                <i class="bi bi-chevron-left i-info"></i>
+                Back
+            </a>
+        </div>
+    </div>
+
+    <div class="m-4 shadow col-10 col-xl-9">
+        <div class="mx-3">
+            <p class="text-secondary">Patient Name</p>
+            <p class="fs-4 fw-semibold text-info"> Testing Test </p>
+            <p class="text-secondary"> Check here for any files that you or the doctors of your subsequents reqestors have attached for you to review. </p>
+            <div class="d-flex">
+                <label for="document" class="col d-flex">
+                    <div class="col p-1 ps-3 border border-dark-subtle ">
+                        <span id="upload">Select</span>
+                    </div>
+                    <div id="btn" class="p-1 btn btn-info w-auto px-3">
+
+                        <i class="bi bi-cloud-arrow-up" style="color:white !important;"></i>
+                        <span style="color:white;" class="ps-1 d-none d-md-block">Upload</span>
+
+                    </div>
+                    <input type="file" class="form-control-file" name="document" id="document" hidden
+                           onchange="upload(this)" multiple>
+                </label>
+            </div>
+            <div class="row">
+                <div class="col m-3 p-2 d-inline fs-4 fw-semibold">Documents</div>
+                <div class="col text-end">
+                    <button class="m-3 p-2 px-3 me-1 rounded btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <i class="bi bi-plus-lg d-inline d-xl-none d-lg-none i-info"></i>
+                        <p class="d-none d-xl-inline d-lg-inline i-info">Download All</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"> <input type="checkbox" /> </th>
+                    <th scope="col"></th>
+                    <th scope="col">Uploader</th>
+                    <th scope="col">Update Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    int indexOf = item.Filename.LastIndexOf("\\");
+                    var fileName = item.Filename[indexOf..];
+                    <tr>
+                        <td> <input type="checkbox" /> </td>
+                        <td> @fileName </td>
+                        <td> @item.Requestid </td>
+                        <td> @item.Createddate </td>
+                        <td> download </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,5 +1,4 @@
 ﻿
-@model HalloDoc.Views.Home.PatientRequestModel
 @{
 }
 <div class="container-fluid pb-5" style="min-height: 100vh;">
@@ -24,23 +23,25 @@
                     <span class="d-none d-md-flex ">(Optional)</span>
                 </label>
             </div>
+            <form enctype="multipart/form-data" id="form" method="post">
             <div class="container-fluid mt-3 p-0">
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="fname" placeholder=" ">
+                                <input type="text" class="form-control" id="fname" name="fname" placeholder=" ">
                             <label for="fname" class=" floating-label">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="lname" placeholder=" ">
+                                <input type="text" class="form-control" id="lname" name="lname" placeholder=" ">
                             <label for="lname" class=" floating-label">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="dob" placeholder=" ">
+                                <input type="date" class="form-control" id="dob" name="dob" placeholder=" ">
                             <label for="dob" class=" floating-label">Date of Birth</label>
                         </div>
                         <h6 class="py-3">Patient Contact Information</h6>
@@ -49,13 +50,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="patientEmail" placeholder=" ">
+                                <input type="email" class="form-control" id="patientEmail" name="patientEmail" placeholder=" ">
                             <label for="patientEmail" class=" floating-label">Email address</label>
                         </div>
                     </div>
                     <div class="col-md-6 z-3">
                         <div class="form-floating mb-3 h-100">
-                            <input type="tel" class="form-control h-100" id="patientTel" placeholder="Phone Number">
+                                <input type="tel" class="form-control h-100" id="patientTel" name="patientTel" placeholder="Phone Number">
                         </div>
                     </div>
                 </div>
@@ -63,13 +64,13 @@
                 <div class="row">
                     <div class="col-md-6 passwordfields" style="display:none">
                         <div class="form-floating mb-3" >
-                            <input type="password" class="form-control" id="password" placeholder=" ">
+                            <input type="password" class="form-control" id="password" name="password" placeholder=" ">
                             <label for="patientEmail" class=" floating-label">Password</label>
                         </div>
                     </div>
                     <div class="col-md-6 passwordfields" style="display:none">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="confirmpassword" placeholder=" ">
+                                <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder=" ">
                             <label for="patientEmail" class=" floating-label">Confirm Password</label>
                         </div>
                     </div>
@@ -80,31 +81,31 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="street" placeholder=" ">
+                            <input type="text" class="form-control" id="street" name="street" placeholder=" ">
                             <label for="street" class=" floating-label">Street</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="city" placeholder=" ">
+                            <input type="text" class="form-control" id="city" name="city" placeholder=" ">
                             <label for="city" class=" floating-label">City</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="state" placeholder=" ">
+                                <input type="text" class="form-control" id="state" name="state" placeholder=" ">
                             <label for="state" class=" floating-label">State</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="zip" placeholder=" ">
+                                <input type="number" class="form-control" id="zip" name="zip" placeholder=" ">
                             <label for="zip" class=" floating-label">Zip Code</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="roomNum" placeholder=" ">
+                                <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder=" ">
                             <label for="roomNum" class=" floating-label">Room #/ Suite (Optional)</label>
                         </div>
                     </div>
@@ -114,7 +115,7 @@
                         <h6 class="py-3">(Optional) Upload Photo or Document</h6>
                     </div>
                     <div class="d-flex">
-                        <label for="exampleFormControlFile1" class="col d-flex">
+                        <label for="document" class="col d-flex">
                             <div class="col p-1 ps-3 border border-dark-subtle ">
                                 <span id="upload">Select</span>
                             </div>
@@ -124,14 +125,14 @@
                                 <span style="color:white;" class="ps-1 d-none d-md-block">Upload</span>
 
                             </div>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1" hidden
-                                   onchange="upload(this)">
+                                <input type="file" class="form-control-file" name="document" id="document" hidden
+                                   onchange="upload(this)" multiple>
                         </label>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="text-end">
-                        <button class="btn btn-info" id="btnsubmit" style="color:white">
+                        <button class="btn btn-info" id="btnsubmit" style="color:white" type="submit">
                             Submit
                         </button>
                         <button class="btn btn-info bg-light ">
@@ -140,7 +141,9 @@
                     </div>
 
                 </div>
+            
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -195,32 +198,27 @@
                 });
             });
 
-            $('#btnsubmit').click(function () {
-                var data = {
-                    Symptoms: $('#symptoms').val(),
-                    firstName: $('#fname').val(),
-                    lastName: $('#lname').val(),
-                    dob: $('#dob').val(),
-                    email: $('#patientEmail').val(),
-                    phone: $('#patientTel').val(),
-                    street: $('#street').val(),
-                    city: $('#city').val(),
-                    state: $('#state').val(),
-                    zipcode: $('#zipcode').val(),
-                    room: $('#roomNum').val(),
-                    typeid: 1,
-                    pasword: $('#password').val()
-                };
+            $('#form').submit(function (e) {
+                e.preventDefault();
+                var data = new FormData(this)
 
                 $.ajax({
                     url: '@Url.Action("PatRequest","SubmitRequest")',
                     type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    
                     success: function (result) {
                         if (result.success) {
-                            alert('Request Cretaed Successfully')
-                            window.location.href = result.redirectUrl;
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "Request created succesfully",
+                                icon: "success"
+                            }).finally(() => {
+                                window.location.href = result.redirectUrl;
+                            });
+                            
                         }
                         else {
                             alert(result.message);

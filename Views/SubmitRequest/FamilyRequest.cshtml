@@ -31,44 +31,45 @@
             </button>
         </div>
     </div>
+    <form enctype="multipart/form-data" id="form" method="post">
     <div class="row justify-content-center">
-
+        
         <div class="col-10 col-md-8 rounded" style="box-shadow: 2px 2px 20px rgb(179, 177, 177);">
             <h6 class="py-3">Family/Friend Information</h6>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cfname" placeholder=" ">
+                        <input type="text" class="form-control" id="cfname" name="cfname" placeholder=" ">
                         <label for="fname" class=" floating-label">First Name</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="clname" placeholder=" ">
+                            <input type="text" class="form-control" id="clname" name="clname" placeholder=" ">
                         <label for="lname" class=" floating-label">Last Name</label>
                     </div>
                 </div>
                 <div class="col-md-6 z-3">
                     <div class="form-floating mb-3 h-100">
-                        <input type="tel" class="form-control w-100 h-100" id="ctel" placeholder="Phone Number">
+                            <input type="tel" class="form-control w-100 h-100" id="ctel" name="ctel" placeholder="Phone Number">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="cemail" placeholder=" ">
+                            <input type="email" class="form-control" id="cemail" name="cemail" placeholder=" ">
                         <label for="patientEmail" class=" floating-label">Email address</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="relation" placeholder=" ">
+                            <input type="text" class="form-control" id="relation" name="relation" placeholder=" ">
                         <label for="relation" class=" floating-label">Relation with Patient</label>
                     </div>
                 </div>
             </div>
             <h6 class="py-3">Patient Information</h6>
             <div class="form-floating">
-                <textarea class="form-control" placeholder=" " id="symptoms" style="height: 15vh;"></textarea>
+                    <textarea class="form-control" placeholder=" " id="symptoms" name="symptoms" style="height: 15vh;"></textarea>
                 <label for="symptoms" class=" floating-label d-flex d-inline">
                     Enter Brief Details of Symptoms
                     <span class="d-none d-md-block">(Optional)</span>
@@ -78,19 +79,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="fname" placeholder=" ">
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder=" ">
                             <label for="fname" class=" floating-label">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="lname" placeholder=" ">
+                                <input type="text" class="form-control" id="lname" name="lname" placeholder=" ">
                             <label for="lname" class=" floating-label">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="dob" placeholder=" ">
+                                <input type="date" class="form-control" id="dob" name="dob" placeholder=" ">
                             <label for="dob" class=" floating-label">Date of Birth</label>
                         </div>
                         <h6 class="py-3">Patient Contact Information</h6>
@@ -99,14 +100,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="patientEmail" placeholder=" ">
+                                <input type="email" class="form-control" id="patientEmail" name="patientEmail" placeholder=" ">
                             <label for="patientEmail" class=" floating-label">Email address</label>
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3 h-100 z-3">
-                            <input type="tel" class="form-control h-100" id="patientTel" placeholder="Phone Number">
+                                <input type="tel" class="form-control h-100" id="patientTel" name="patientTel" placeholder="Phone Number">
                         </div>
                     </div>
                     <h6 class="py-3">Patient Location</h6>
@@ -114,31 +115,31 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="street" placeholder=" ">
+                                <input type="text" class="form-control" id="street" name="street" placeholder=" ">
                             <label for="street" class=" floating-label">Street</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="city" placeholder=" ">
+                                <input type="text" class="form-control" id="city" name="city" placeholder=" ">
                             <label for="city" class=" floating-label">City</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="state" placeholder=" ">
+                                <input type="text" class="form-control" id="state" name="state" placeholder=" ">
                             <label for="state" class=" floating-label">State</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="zip" placeholder=" ">
+                                <input type="number" class="form-control" id="zip" name="zip" placeholder=" ">
                             <label for="zip" class=" floating-label">Zip Code</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="roomNum" placeholder=" ">
+                                <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder=" ">
                             <label for="roomNum" class=" floating-label">Room #/ Suite (Optional)</label>
                         </div>
                     </div>
@@ -148,7 +149,7 @@
                         <h6 class="py-3">(Optional) Upload Photo or Document</h6>
                     </div>
                     <div class="d-flex">
-                        <label for="exampleFormControlFile1" class="col d-flex">
+                        <label for="document" class="col d-flex">
                             <div class="col p-1 ps-3 border border-dark-subtle">
                                 <span id="upload">Select</span>
                             </div>
@@ -158,14 +159,14 @@
                                 <span style="color:white;" class="ps-1 d-none d-md-block">Upload</span>
 
                             </div>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1" hidden
+                                <input type="file" class="form-control-file" id="document" name="document" hidden
                                    onchange="upload(this)">
                         </label>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="text-end">
-                        <button class="btn btn-info" style="color:white">
+                        <button class="btn btn-info" style="color:white" id="btnsubmit" type="submit">
                             Submit
                         </button>
                         <button class="btn btn-info bg-light ">
@@ -176,7 +177,9 @@
                 </div>
             </div>
         </div>
+        
     </div>
+    </form>
 </div>
 <script>
     var date = new Date();
@@ -217,3 +220,39 @@
                                                         class="text-white-50 text-decoration-none fs-6">Privacy Policy</a>
     </footer>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#form').submit(function (e) {
+            e.preventDefault();
+            var data = new FormData(this)
+
+            $.ajax({
+                url: '@Url.Action("FamRequest","SubmitRequest")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Request created succesfully",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.href = result.redirectUrl;
+                        });
+
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occured');
+                }
+            });
+        });
+    });
+</script>

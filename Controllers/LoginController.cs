@@ -6,6 +6,7 @@ using HalloDocDAL.Models;
 using System.ComponentModel.DataAnnotations;
 using HalloDocDAL.Model;
 using HalloDocBAL.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace HalloDoc.Controllers;
 
@@ -37,7 +38,10 @@ public class LoginController : Controller
     {
         var result = await _userService.Login(model);
         if (result) {
-            return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "Home") });
+            Debug.WriteLine(model.Email);
+            HttpContext.Session.SetString("email", model.Email);
+            
+            return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
         }
         else
         {
@@ -56,7 +60,7 @@ public class LoginController : Controller
 
             var result = await _userService.SignUp(model);
 
-            return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "Home") });
+            return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
         }
 
         return Json(new { success = false, message = "Invalid Input" });

@@ -7,19 +7,19 @@ using Microsoft.EntityFrameworkCore;
 using HalloDocDAL.Data;
 using Microsoft.AspNetCore.Identity;
 using HalloDocBAL.Interfaces;
+using HalloDoc.Views.Home;
 
 namespace HalloDoc.Controllers;
 
 public class SubmitRequestController : Controller
 {
-    private readonly ApplicationDbContext _context;
     private readonly IUserService _userService;
     private readonly IRequestService _requestService;
 
 
-    public SubmitRequestController(ApplicationDbContext context,IUserService userService, IRequestService requestService)
+    public SubmitRequestController(IUserService userService, IRequestService requestService)
     {
-        _context = context;
+        
         _userService = userService;
         _requestService = requestService;
     }
@@ -54,7 +54,6 @@ public class SubmitRequestController : Controller
     public async Task<JsonResult> CheckEmailExists(string email)
     {
         var emailExists = await _userService.CheckUser(email);
-        Console.WriteLine(emailExists != null);
         if (emailExists != null)
         {
             return Json(true);
@@ -63,13 +62,32 @@ public class SubmitRequestController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> PatRequest([FromBody] Req model)
+    public async Task<JsonResult> PatRequest(IFormCollection formcollection, Req model)
     {
-        if (ModelState.IsValid)
-        {
+
+        model.email = formcollection["patientEmail"];
+        model.cfirstName = formcollection["cfname"];
+        model.clastName = formcollection["clname"];
+        model.cphone = formcollection["ctel"];
+        model.cemail = formcollection["cemail"];
+        model.propbus = formcollection["cprop"];
+        model.symptoms = formcollection["symptoms"];
+        model.firstName = formcollection["fname"];
+        model.lastName = formcollection["lname"];
+        model.password = formcollection["password"];
+        model.dob = formcollection["dob"];
+        model.phone = formcollection["patientTel"];
+        model.street = formcollection["street"];
+        model.city = formcollection["city"];
+        model.state = formcollection["state"];
+        model.zipcode = formcollection["zipcode"];
+        model.room = formcollection["roomNum"];
+        model.typeid = 1;
+        model.document = formcollection.Files;
+        Debug.WriteLine(model.document.Count);
             var aspuser = new Aspnetuser();
             var user = new User();
-            if (!(await CheckEmailExists(model.email) == Json(false)))
+            if ((await CheckEmailExists(model.email) == Json(false)))
             {
                 var reg = new Register
                 {
@@ -93,9 +111,39 @@ public class SubmitRequestController : Controller
             await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
-        }
+        
+    }
 
-        return Json(new { success = false, message = "Invalid Input" });
+    [HttpPost]
+    public async Task<JsonResult> FamRequest(IFormCollection formcollection,Req model)
+    {
+        model.email = formcollection["patientEmail"];
+        model.cfirstName = formcollection["cfname"];
+        model.clastName = formcollection["clname"];
+        model.cphone = formcollection["ctel"];
+        model.cemail = formcollection["cemail"];
+        model.propbus = formcollection["cprop"];
+        model.symptoms = formcollection["symptoms"];
+        model.firstName = formcollection["fname"];
+        model.lastName = formcollection["lname"];
+        model.password = formcollection["password"];
+        model.dob = formcollection["dob"];
+        model.phone = formcollection["patientTel"];
+        model.street = formcollection["street"];
+        model.city = formcollection["city"];
+        model.state = formcollection["state"];
+        model.zipcode = formcollection["zip"];
+        model.room = formcollection["roomNum"];
+        model.typeid = 2;
+        
+        
+
+            await _requestService.PatientRequest(model);
+
+            return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
+        
+
+        
     }
 
     [HttpPost]
@@ -103,46 +151,7 @@ public class SubmitRequestController : Controller
     {
         if (ModelState.IsValid)
         {
-            var concierge = new Concierge
-            {
-                Conciergename = model.cfirstName,
-                Address = model.street + model.city,
-                Street = model.street,
-                City = model.city,
-                State = model.state,
-                Zipcode = model.zipcode,
-                Createddate = DateTime.Now
-            };
-            _context.Concierges.Add(concierge);
-            await _context.SaveChangesAsync();
-
-            var user = new User
-            {
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Email = model.email,
-                Mobile = model.phone,
-                Street = model.street,
-                City = model.city,
-                State = model.state,
-                Zipcode = model.zipcode
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            var request = new Request
-            {
-                Requesttypeid = model.typeid,
-                Userid = user.Userid,
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Phonenumber = model.phone,
-                Email = model.email,
-                Createddate = DateTime.Now
-            };
-
-            _context.Requests.Add(request);
-            await _context.SaveChangesAsync();
+            await _requestService.ConciergeRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
         }
@@ -155,45 +164,7 @@ public class SubmitRequestController : Controller
     {
         if (ModelState.IsValid)
         {
-            var business = new Business
-            {
-                Name = model.cfirstName,
-                Address1 = model.street + model.city,
-                City = model.city,
-                Zipcode = model.zipcode,
-                Createddate = DateTime.Now,
-                Phonenumber = model.cphone
-            };
-            _context.Businesses.Add(business);
-            await _context.SaveChangesAsync();
-
-            var user = new User
-            {
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Email = model.email,
-                Mobile = model.phone,
-                Street = model.street,
-                City = model.city,
-                State = model.state,
-                Zipcode = model.zipcode
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            var request = new Request
-            {
-                Requesttypeid = model.typeid,
-                Userid = user.Userid,
-                Firstname = model.firstName,
-                Lastname = model.lastName,
-                Phonenumber = model.phone,
-                Email = model.email,
-                Createddate = DateTime.Now
-            };
-
-            _context.Requests.Add(request);
-            await _context.SaveChangesAsync();
+            await _requestService.BusinessRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
         }
