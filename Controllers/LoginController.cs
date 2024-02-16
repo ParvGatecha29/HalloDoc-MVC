@@ -65,6 +65,9 @@ public class LoginController : Controller
             }
 
             var result = await _userService.SignUp(model);
+            if (!result) { 
+                return Json(new { success = false, message = "User already registered" });
+            }
 
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
         }

@@ -21,7 +21,7 @@
                 <div class="d-inline d-flex align-items-center justify-content-center">
                     <div class=" d-inline justify-content-center align-items-center d-none d-md-flex">
                         <p class="mx-3 my-0">
-                            Welcome <strong>Tests Testing</strong>
+                            Welcome <strong id="welcome">Tests Testing</strong>
                         </p>
                         <button class="btn btn-outline-info ms-auto my-auto darkBtn mx-3" type="button">
                             Logout
@@ -118,7 +118,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col"> <input type="checkbox" /> </th>
+                        <th scope="col"> <input type="checkbox" id="selectAll"/> </th>
                         <th scope="col"></th>
                         <th scope="col">Uploader</th>
                         <th scope="col">Update Date</th>
@@ -131,7 +131,7 @@
                     {
                         
                         <tr>
-                            <td> <input type="checkbox" name="selectedDocuments" value="@item.Requestwisefileid" /> </td>
+                            <td> <input type="checkbox" class="checkbox" name="selectedDocuments" value="@item.Requestwisefileid" /> </td>
                             <td> @item.Filename </td>
                             <td> @item.Requestid </td>
                             <td> @item.Createddate </td>
@@ -150,8 +150,16 @@
         <partial name="_ProfilePartial" />
     </div>
 </div>
-
 <script>
+$("#selectAll").change(function () {
+    $(".checkbox").prop('checked', $(this).prop("checked"));
+});
+</script>
+<script>
+    $('#welcome').html('@Model.user.Firstname');
+    $('#logout').click(function () {
+        window.location.href = '@Url.Action("Logout","Login")';
+    });
     $(document).ready(function () {
         $('#form').submit(function (e) {
             e.preventDefault();

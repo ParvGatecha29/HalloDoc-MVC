@@ -21,12 +21,12 @@
                 </div>
                 <div class="form-style">
                     <div class="form-group pb-3 form-floating d-flex d-inline">
-                        <input type="text" placeholder="Username" class="form-control" id="user"
+                        <input type="email" placeholder="Email" class="form-control" id="user"
                                aria-describedby="emailHelp" name="Username">
                         <span class="photo">
                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                         </span>
-                        <label for="user" class="floating-label">Username</label>
+                        <label for="user" class="floating-label">Email</label>
                     </div>
                     <div class="form-group pb-3 form-floating d-flex d-inline">
                         <input type="password" placeholder="Password" class="form-control"
@@ -71,11 +71,20 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.success) {
-                        alert('User registerd Successfully')
-                        window.location.href = result.redirectUrl;
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "User registered successfully",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.href = result.redirectUrl;
+                        });
                     }
                     else {
-                        alert(result.message);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: result.message
+                        });
                     }
                 },
                 error: function(){

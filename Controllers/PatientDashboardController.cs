@@ -131,7 +131,7 @@ public class PatientDashboardController : Controller
     [HttpPost]
     public async Task<JsonResult> EditProfile(IFormCollection formcollection, CustomModel model)
     {
-
+        Debug.WriteLine(formcollection["patientEmail"]);
         model.user.Email = formcollection["patientEmail"];
         model.user.Firstname = formcollection["fname"];
         model.user.Lastname = formcollection["lname"];
@@ -141,7 +141,7 @@ public class PatientDashboardController : Controller
         model.user.State = formcollection["state"];
         model.user.Zipcode = formcollection["zip"];
 
-        await _userService.EditProfile(model);
+        await _userService.EditUser(model.user);
 
         return Json(new { success = true});
     }
