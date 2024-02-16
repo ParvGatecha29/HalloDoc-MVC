@@ -232,8 +232,14 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.success) {
-                        alert('Request Cretaed Successfully')
-                        window.location.href = result.redirectUrl;
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Request created succesfully",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.href = result.redirectUrl;
+                        });
+
                     }
                     else {
                         alert(result.message);

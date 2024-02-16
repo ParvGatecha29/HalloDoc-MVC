@@ -1,8 +1,8 @@
 ﻿
-@model List<HalloDocDAL.Models.Request>
+@* @model List<HalloDocDAL.Model.Dashboard> *@
+    @model HalloDocDAL.Model.CustomModel
 @{
     Layout = "_none";
-
 }
 <div class="container-fluid">
     <div class="row">
@@ -24,9 +24,9 @@
                     <div class="d-inline d-flex align-items-center justify-content-center">
                         <div class=" d-inline justify-content-center align-items-center d-none d-md-flex">
                             <p class="mx-3 my-0">
-                                Welcome <strong>Tests Testing</strong>
+                                Welcome <strong id="welcome">Tests Testing</strong>
                             </p>
-                            <button class="btn btn-outline-info ms-auto my-auto darkBtn mx-3" type="button">
+                            <button id="logout" class="btn btn-outline-info ms-auto my-auto darkBtn mx-3" type="button">
                                 Logout
                             </button>
                         </div>
@@ -77,9 +77,33 @@
                     </span>
                 </button>
                 <button class="btn btn-outline-info ms-auto my-auto darkBtn mx-3 d-none d-md-block"
-                        type="button">
+                        type="button" data-bs-target="#create_new" data-bs-toggle="modal">
                     Create New Request
                 </button>
+                <div class="modal fade " id="create_new" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info text-white">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create New Request</h1>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="h5">Here, I want to create new request for..</p>
+
+                                <input type="radio" class="btn-check btn btn-info" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+                                <label class="btn btn-outline-info text-info mx-2" for="success-outlined">Me</label>
+
+                                <input type="radio" class="btn-check btn" name="options-outlined" id="danger-outlined" autocomplete="off">
+                                <label class="btn btn-outline-info text-info mx-2" for="danger-outlined">Some one else</label>
+
+                            </div>
+                            <div class="modal-footer">
+                                <input value="Continue" id="continueButton" type="button" class="btn btn-outline-info btn-info text-info">
+                                <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -93,7 +117,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.dashboards)
                     {
                         <tr class="table-row">
                             <td data-label="Created Date">@item.Createddate</td>
@@ -105,11 +129,18 @@
                             {
                                 <td class="mobile-hide" data-label="Current Status">Inactive</td>
                             }
-                            <td class="mobile-hide" data-label="Document">
-                                <button type="button" onclick="location.href='@Url.Action("ViewDocument", "Patientdashboard",new {id = item.Requestid })'">
-                                    View Document
-                                </button>
-                            </td>
+                            @if(item.Filename != null)
+                            {
+                                <td class="mobile-hide" data-label="Document">
+                                    <button type="button" class="btn btn-outline-info" onclick="location.href='@Url.Action("ViewDocument", "Patientdashboard",new {id = item.Requestid })'">
+                                        View Document
+                                    </button>
+                                </td>
+                            }
+                            else
+                            {
+                                <td> </td>
+                            }
                         </tr>
                     }
                 </tbody>
@@ -119,13 +150,7 @@
 
         </div>
         <div class="tab-pane fade p-4 tab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <p>
-                Lorem ipsum dolor sit
-                amet consectetur adipisicing elit. Corporis illum quisquam, rerum, minus et expedita sapiente
-                reprehenderit autem maxime adipisci unde aliquam provident id beatae explicabo odio magni. Nobis
-                suscipit facilis aut quam consequuntur neque dolore voluptate enim explicabo iusto illo deserunt sed
-                architecto incidunt atque, qui, pariatur nemo quaerat!
-            </p>
+            <partial name="_ProfilePartial" />
         </div>
     </div>
 </div>
@@ -139,12 +164,34 @@
         <a href="#" class="text-white text-decoration-none fs-6">Privacy Policy</a>
     </footer>
 </div>
+
+
+@section DashboardScript{
+    <script>
+        document.getElementById("continueButton").addEventListener("click", function () {
+            var selectedOption = document.querySelector('input[name="options-outlined"]:checked').id;
+            if (selectedOption === "success-outlined") {
+                // Redirect to me request view page
+                window.location.href = '@Url.Action("Patientmerequest","PatientDashboard")';
+            }
+            else if (selectedOption === "danger-outlined") {
+                // Redirect to other request view page
+                window.location.href = "/PatientDashboard/Otherrequest";
+            }
+        });
+    </script>
+}
 <script>
     $(document).ready(function () {
         // Event delegation for dynamically added content
         $('#responsiveTable').on('click', 'tbody .table-row', function () {
             // Toggle the 'show-details' class
             $(this).toggleClass('show-details');
+        });
+
+        $('#welcome').html('@Model.user.Firstname');
+        $('#logout').click(function () {
+            window.location.href = '@Url.Action("Logout","Login")';
         });
     });
 </script>

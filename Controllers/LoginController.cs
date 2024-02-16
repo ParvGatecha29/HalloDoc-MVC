@@ -48,7 +48,13 @@ public class LoginController : Controller
             return Json(new { success = false, message = "Invalid Username or Password" });
         }
     }
-    
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("PatientLogin","Login");
+    }
+
     public async Task<JsonResult> PatientSignUp([FromBody] Register model)
     {
         if(ModelState.IsValid)

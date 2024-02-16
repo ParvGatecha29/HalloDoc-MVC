@@ -87,7 +87,7 @@ public class SubmitRequestController : Controller
         Debug.WriteLine(model.document.Count);
             var aspuser = new Aspnetuser();
             var user = new User();
-            if ((await CheckEmailExists(model.email) == Json(false)))
+            if (!(await CheckEmailExists(model.email) == Json(false)))
             {
                 var reg = new Register
                 {
@@ -101,11 +101,11 @@ public class SubmitRequestController : Controller
                 user.Firstname = model.firstName;
                 user.Lastname = model.lastName;
                 user.Aspnetuserid = aspuser.Id;
+                user.Street = model.street;
+                user.City = model.city;
+                user.State = model.state;
+                user.Mobile = model.phone;
                 await _userService.AddUser(user);
-            }
-            else
-            {
-                aspuser = await _userService.CheckUser(model.email);
             }
 
             await _requestService.PatientRequest(model);

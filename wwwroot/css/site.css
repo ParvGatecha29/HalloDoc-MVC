@@ -505,3 +505,24 @@ textarea:focus {
             content: none;
         }
 }
+
+.shadow-lg {
+    margin-top: 2vh;
+    padding: 1vw 2vw 2vw 2vw;
+}
+
+.btn-outline-info:hover {
+    color: white;
+}
+
+[data-bs-theme="light"] .nav-link {
+    color: black;
+}
+
+[data-bs-theme="dark"] .nav-link {
+    color: white;
+}
+
+#darkmode:hover svg {
+    fill: white;
+}
