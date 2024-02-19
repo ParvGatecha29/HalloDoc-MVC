@@ -229,7 +229,7 @@
                 url: '@Url.Action("ConRequest","SubmitRequest")',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(data),
+                data: { email: email }
                 success: function (result) {
                     if (result.success) {
                         Swal.fire({

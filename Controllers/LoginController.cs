@@ -7,16 +7,22 @@ using System.ComponentModel.DataAnnotations;
 using HalloDocDAL.Model;
 using HalloDocBAL.Interfaces;
 using Microsoft.AspNetCore.Http;
+using HalloDocBAL.Services;
+using System.Net.Mail;
 
 namespace HalloDoc.Controllers;
 
 public class LoginController : Controller
 {
     private readonly IUserService _userService;
+    private readonly ITokenService _tokenService;
+    private readonly IEmailService _emailService;
 
-    public LoginController(IUserService userService)
+    public LoginController(IUserService userService, ITokenService tokenService, IEmailService emailService)
     {
         _userService = userService;
+        _tokenService = tokenService;
+        _emailService = emailService;
     }
 
     public IActionResult PatientLogin()
@@ -73,6 +79,19 @@ public class LoginController : Controller
         }
 
         return Json(new { success = false, message = "Invalid Input" });
+    }
+
+    
+    public async Task<JsonResult> SendResetEmail(string toEmail)
+    {
+        Debug.WriteLine(toEmail);
+        var token = _tokenService.GenerateToken(toEmail);
+        var link = Url.Action("ResetPassword", "Login", new { token = token });
+        var subject = "Reset Your Password";
+        var body = $"Please reset your password by clicking <a href='{link}'>here</a>.";
+
+        _emailService.SendEmail(toEmail, subject, body);
+        return Json(new { success = true, redirectUrl = @Url.Action("Login", "Login") });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

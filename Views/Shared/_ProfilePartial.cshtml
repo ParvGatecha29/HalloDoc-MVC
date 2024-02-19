@@ -9,7 +9,7 @@
         </svg>Back
     </button>
 </div>
-<form enctype="multipart/form-data" id="form" method="post">
+<form id="form2" enctype="multipart/form-data" method="post">
 <div class="shadow-lg">
     <h5>
         General Information
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-11 mt-4 col-md-6 form-floating ">
                 <input type="date" class="t  form-control" id="dob" name="dob" disabled placeholder=" ">
-                <label for="Dates" class="ms-2 floating-label">Date of Birth</label>
+                <label for="dob" class="ms-2 floating-label">Date of Birth</label>
             </div>
         </div>
     </div>
@@ -49,11 +49,11 @@
         </div>
         <div class="col-11 mt-4 col-md-4 form-floating ">
                 <input type="text" class="t  form-control" id="patientTel" name="patientTel" disabled placeholder=" ">
-            <label for="tel" class="ms-2 floating-label">Phone Number</label>
+            <label for="patientTel" class="ms-2 floating-label">Phone Number</label>
         </div>
         <div class="col-11 mt-4 col-md-6 form-floating ">
                 <input type="email" class="t  form-control" id="patientEmail" name="patientEmail" disabled placeholder=" ">
-            <label for="Dates" class="ms-2 floating-label">Email</label>
+            <label for="patientEmail" class="ms-2 floating-label">Email</label>
         </div>
     </div>
     <div class="row mt-4">
@@ -69,8 +69,8 @@
         </div>
         <div class="col-11 col-md-6 mt-4">
             <div class="form-floating">
-                <input type="text" class="t  form-control" id="City" name="city" disabled placeholder=" ">
-                <label for="City" class="floating-label">City</label>
+                <input type="text" class="t  form-control" id="city" name="city" disabled placeholder=" ">
+                <label for="city" class="floating-label">City</label>
             </div>
         </div>
     </div>
@@ -78,14 +78,14 @@
     <div class="row ">
         <div class="col-11 col-md-6 mt-4">
             <div class="form-floating">
-                <input type="text" class="t  form-control" id="State" name="state" disabled placeholder=" ">
-                <label for="State" class="floating-label">State</label>
+                <input type="text" class="t  form-control" id="state" name="state" disabled placeholder=" ">
+                <label for="state" class="floating-label">State</label>
             </div>
         </div>
         <div class="col-11 col-md-4 mt-4">
             <div class="form-floating">
-                <input type="number" class="t  form-control" id="Zip" name="zip" disabled placeholder=" ">
-                <label for="Zip" class="floating-label">Zip Code</label>
+                <input type="number" class="t  form-control" id="zip" name="zip" disabled placeholder=" ">
+                <label for="zip" class="floating-label">Zip Code</label>
             </div>
         </div>
         <div class="col-2 mt-4 mr-auto">
@@ -103,7 +103,7 @@
                 Edit
             </button>
 
-            <button id="saveBtn" onclick="saveDetails()" type="submit" class="btn my-4 py-2 px-4" style="background-color: #10bce9; color: white; display:none;">
+            <button id="saveBtn" type="button" class="btn my-4 py-2 px-4" style="background-color: #10bce9; color: white; display:none;">
                 Save
             </button>
 
@@ -139,7 +139,12 @@
         $('#patientEmail').val('@Model.user.Email');
         $('#lname').val('@Model.user.Lastname');
         $('#street').val('@Model.user.Street');
-        
+        $('#city').val('@Model.user.City');
+        $('#state').val('@Model.user.State');
+        $('#zipcode').val('@Model.user.Zipcode');
+        var d = new Date('@Model.user.Intyear-@Model.user.Strmonth-@Model.user.Intdate');
+        const formattedDate = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+        $('#dob').val(formattedDate);
     });
 </script>
 
@@ -188,16 +193,28 @@
 
     }
 
-    $('#form').submit(function (e) {
-        e.preventDefault();
-        var data = new FormData(this)
+    $('#saveBtn').click(function (e) {
+        var d = new Date($('#dob').val());
+
+        var data = {
+            firstName: $('#fname').val(),
+            lastName: $('#lname').val(),
+            intDate: d.getDate(),
+            intYear: d.getFullYear(),
+            strMonth: d.getMonth(),
+            email: $('#patientEmail').val(),
+            phone: $('#patientTel').val(),
+            street: $('#street').val(),
+            city: $('#city').val(),
+            state: $('#state').val(),
+            zipcode: $('#zipcode').val(),
+        };
 
         $.ajax({
             url: '@Url.Action("EditProfile","PatientDashboard")',
             type: 'POST',
-            data: data,
-            processData: false,
-            contentType: false,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
             success: function (result) {
                 if (result.success) {
                     Swal.fire({

@@ -129,21 +129,13 @@ public class PatientDashboardController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> EditProfile(IFormCollection formcollection, CustomModel model)
+    public async Task<JsonResult> EditProfile([FromBody] User model)
     {
-        Debug.WriteLine(formcollection["patientEmail"]);
-        model.user.Email = formcollection["patientEmail"];
-        model.user.Firstname = formcollection["fname"];
-        model.user.Lastname = formcollection["lname"];
-        model.user.Mobile = formcollection["patientTel"];
-        model.user.Street = formcollection["street"];
-        model.user.City = formcollection["city"];
-        model.user.State = formcollection["state"];
-        model.user.Zipcode = formcollection["zip"];
 
-        await _userService.EditUser(model.user);
+            await _userService.EditUser(model);
 
-        return Json(new { success = true});
+            return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
+        
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
