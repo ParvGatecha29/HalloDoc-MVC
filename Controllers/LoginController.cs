@@ -44,7 +44,6 @@ public class LoginController : Controller
     {
         var result = await _userService.Login(model);
         if (result) {
-            Debug.WriteLine(model.Email);
             HttpContext.Session.SetString("email", model.Email);
             
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
@@ -74,24 +73,42 @@ public class LoginController : Controller
             if (!result) { 
                 return Json(new { success = false, message = "User already registered" });
             }
-
+            HttpContext.Session.SetString("email", model.Email);
             return Json(new { success = true, redirectUrl = Url.Action("PatientDashboard", "PatientDashboard") });
         }
 
         return Json(new { success = false, message = "Invalid Input" });
     }
 
-    
+    public IActionResult ResetPassword()
+    {
+        return View();
+    }
+
+    [HttpPost]
     public async Task<JsonResult> SendResetEmail(string toEmail)
     {
-        Debug.WriteLine(toEmail);
         var token = _tokenService.GenerateToken(toEmail);
-        var link = Url.Action("ResetPassword", "Login", new { token = token });
+        var link = "https://localhost:44319/Login/ResetPassword?token="+token;
         var subject = "Reset Your Password";
         var body = $"Please reset your password by clicking <a href='{link}'>here</a>.";
 
         _emailService.SendEmail(toEmail, subject, body);
-        return Json(new { success = true, redirectUrl = @Url.Action("Login", "Login") });
+        return Json(new { success = true, redirectUrl = @Url.Action("PatientLogin", "Login") });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ResetPass([FromBody] Register model)
+    {
+        var (email, isValid) = _tokenService.ValidateToken(model.token);
+        if (isValid && model.password == model.confirmpassword)
+        {
+            var user = await _userService.CheckUser(email);
+            await _userService.EditAspNetUser(user);
+            return Json(new { success = true, redirectUrl = @Url.Action("PatientLogin", "Login") });
+        }
+
+        return Json(new { success = false, message ="Reset Failed" });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

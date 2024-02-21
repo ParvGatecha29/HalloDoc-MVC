@@ -8,6 +8,8 @@ using HalloDocDAL.Data;
 using Microsoft.AspNetCore.Identity;
 using HalloDocBAL.Interfaces;
 using HalloDoc.Views.Home;
+using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Http;
 
 namespace HalloDoc.Controllers;
 
@@ -64,7 +66,6 @@ public class SubmitRequestController : Controller
     [HttpPost]
     public async Task<JsonResult> PatRequest(IFormCollection formcollection, Req model)
     {
-
         model.email = formcollection["patientEmail"];
         model.cfirstName = formcollection["cfname"];
         model.clastName = formcollection["clname"];
@@ -75,7 +76,6 @@ public class SubmitRequestController : Controller
         model.firstName = formcollection["fname"];
         model.lastName = formcollection["lname"];
         model.password = formcollection["password"];
-        model.dob = formcollection["dob"];
         model.phone = formcollection["patientTel"];
         model.street = formcollection["street"];
         model.city = formcollection["city"];
@@ -84,7 +84,6 @@ public class SubmitRequestController : Controller
         model.room = formcollection["roomNum"];
         model.typeid = 1;
         model.document = formcollection.Files;
-        Debug.WriteLine(model.document.Count);
             var aspuser = new Aspnetuser();
             var user = new User();
             if (!(await CheckEmailExists(model.email) == Json(false)))
@@ -170,6 +169,16 @@ public class SubmitRequestController : Controller
         }
 
         return Json(new { success = false, message = "Invalid Input" });
+    }
+
+  
+    public async Task<IActionResult> OtherRequest()
+    {
+        var email = HttpContext.Session.GetString("email");
+        ViewData["email"] = email;
+        User user = new User();
+        user = await _userService.GetUser(email);
+        return View(user);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

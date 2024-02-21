@@ -194,7 +194,7 @@ input:focus {
 
     .famBtn:hover {
         background-color: transparent !important;
-        color: #40c7e9;
+        color: #40c7e9 !important;
     }
 
 .busBtn {
