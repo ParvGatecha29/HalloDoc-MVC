@@ -28,6 +28,7 @@ builder.Services.AddScoped<IConciergeRepository, ConciergeRepository>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
 builder.Services.AddScoped<IRequestConciergeRepository, RequestConciergeRepository>();
@@ -36,6 +37,8 @@ builder.Services.AddScoped<IRequestWiseFilesRepository, RequestWiseFilesReposito
 builder.Services.AddScoped<IRequestService, RequestService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
+
 
 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 var app = builder.Build();

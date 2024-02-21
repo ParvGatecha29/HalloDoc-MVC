@@ -45,14 +45,14 @@
             <div class="collapse navbar-collapse w-100" id="navbarTogglerDemo01">
                 <ul class="nav nav-tabs navbar-nav me-auto mb-2 mb-lg-0" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab"
+                        <button class="nav-link active layout" id="dashboard-tab" data-bs-toggle="tab"
                                 data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
                                 aria-selected="true" style="color:inherit">
                             Dashboard
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                        <button class="nav-link layout" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
                                 type="button" role="tab" aria-controls="profile" aria-selected="false"
                                 style="color:inherit">
                             Profile
@@ -115,27 +115,27 @@
                 </div>
             </div>
 
-            <table class="table">
-                <thead>
+            <table id="responsiveTable">
+                <thead class="tab">
                     <tr>
-                        <th scope="col"> <input type="checkbox" id="selectAll"/> </th>
-                        <th scope="col"></th>
-                        <th scope="col">Uploader</th>
-                        <th scope="col">Update Date</th>
-                        <th scope="col">Action</th>
+                        
+                        <th> File Name</th>
+                        <th class="mobile-hide">Uploader</th>
+                        <th class="mobile-hide">Update Date</th>
+                        <th class="mobile-hide">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @foreach (var item in Model.requests)
                     {
-                        
-                        <tr>
+
+                        <tr class="table-row">
                             <td> <input type="checkbox" class="checkbox" name="selectedDocuments" value="@item.Requestwisefileid" /> </td>
-                            <td> @item.Filename </td>
-                            <td> @item.Requestid </td>
-                            <td> @item.Createddate </td>
-                            <td>
+                            <td class="d-flex flex-wrap w-50" data-label="File Name"> @item.Filename </td>
+                            <td class="mobile-hide" data-label="Request ID"> @item.Requestid </td>
+                            <td class="mobile-hide" data-label="Created Date"> @item.Createddate </td>
+                            <td class="mobile-hide">
                                 <button type="button" class="btn btn-outline-info" onclick="location.href='@Url.Action("DownloadOne", "Patientdashboard",new {id = item.Requestwisefileid})'">
                                     Download
                                 </button>

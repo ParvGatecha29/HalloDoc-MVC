@@ -157,7 +157,7 @@ input:focus {
   width: 40%;
 }
 
-.nav-link.active {
+.nav-link.active.layout {
   border:none !important;
   border-bottom: 4px solid rgb(105, 200, 212) !important;
   color: rgb(107, 228, 236) !important;
@@ -477,7 +477,7 @@ textarea:focus {
             border-bottom: 1px solid #eee;
             position: relative;
             padding-left: 50%;
-            text-align: right;
+            text-align: left;
         }
 
             #responsiveTable td:before {
@@ -525,4 +525,53 @@ textarea:focus {
 
 #darkmode:hover svg {
     fill: white;
+}
+
+.arrow-down {
+    display: none;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid;
+    border-top-color: inherit;
+}
+
+.new.active {
+    background-color: rgb(32,63,154) !important;
+    color:white !important;
+}
+
+.pending.active {
+    background-color: rgb(38,164,211) !important;
+    color: white !important;
+}
+
+.act.active {
+    background-color: rgb(48,129,62) !important;
+    color: white !important;
+}
+
+.conclude.active {
+    background-color: rgb(174,38,119) !important;
+    color: white !important;
+}
+.toclose {
+    border: 1px solid rgb(37,110,176);
+}
+.toclose.active {
+    background-color: rgb(37,110,176) !important;
+    color: white !important;
+}
+
+.unpaid {
+    border:1px solid rgb(145,105,179);
+}
+.unpaid.active {
+    background-color: rgb(145,105,179) !important;
+    color: white !important;
+}
+
+.normal-input:focus {
+    border: 1px solid rgb(145,105,179) !important;
 }
