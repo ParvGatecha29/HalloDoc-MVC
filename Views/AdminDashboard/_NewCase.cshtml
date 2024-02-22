@@ -71,11 +71,11 @@
     </div>
 
     <div class="d-flex flex-wrap align-items-center">
-        <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2 d-none d-md-block" style="font-size: 13px;">
+        <button onclick="allrequests()" class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2 d-none d-md-block" style="font-size: 13px;">
             <span>All</span>
         </button>
 
-        <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
+        <button onclick="filterrequests(1)" class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
             <div class="d-flex flex-column d-md-inline align-items-center">
                 <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
@@ -84,7 +84,7 @@
             </div>
         </button>
 
-        <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
+        <button onclick="filterrequests(2)" class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
             <div class="d-flex flex-column d-md-inline align-items-center">
                 <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
@@ -93,7 +93,16 @@
             </div>
         </button>
 
-        <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
+        <button onclick="filterrequests(3)" class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
+            <div class="d-flex flex-column d-md-inline align-items-center">
+                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                </svg>
+                <span class="ms-2">Concierge</span>
+            </div>
+        </button>
+
+        <button onclick="filterrequests(4)" class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
             <div class="d-flex flex-column d-md-inline align-items-center">
                 <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
@@ -102,14 +111,7 @@
             </div>
         </button>
 
-        <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
-            <div class="d-flex flex-column d-md-inline align-items-center">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <span class="ms-2">Concierge</span>
-            </div>
-        </button>
+        
 
         <button class="rounded border-0 bg-transparent d-flex align-items-center ms-0 ms-md-2" style="font-size: 13px;">
             <div class="d-flex flex-column d-md-inline align-items-center">
@@ -123,9 +125,10 @@
 </div>
 
 @* Third part *@
-<table class="table m-0 p-0">
+<table class="table m-0 p-0 caseTable">
     <thead>
         <tr class="table-secondary d-none d-xl-table-row d-md-table-row">
+            <th scope="col" class="bg-transparent" hidden> <p> RequestTypeID </p> </th>
             <th scope="col" class="bg-transparent"> <p> Name </p> </th>
             <th scope="col" class="bg-transparent"> <p> Date Of Birth </p> </th>
             <th scope="col" class="bg-transparent"> <p> Requestor </p> </th>
@@ -135,71 +138,82 @@
             <th scope="col" class="bg-transparent"> <p> Notes </p> </th>
             <th scope="col" class="bg-transparent"> <p> Chat with </p> </th>
             <th scope="col" class="bg-transparent"> <p> Actions </p> </th>
+            
         </tr>
     </thead>
     <tbody>
         @foreach(var request in Model)
         {
-            @if (request.requesttype == 1)
+            @if(request.status == 1)
             {
-                <tr class="d-none d-xl-table-row d-md-table-row" style="background-color: rgb(95,188,97)">
-                    <td class="bg-transparent"> <p> @request.name </p> </td>
-                    <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
-                    <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
-                    <td class="bg-transparent"> <p> @request.reqdate </p> </td>
-                    <td class="bg-transparent"> <p> @request.phone </p> </td>
-                    <td class="bg-transparent"> <p> @request.address </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                </tr>
+                @if (request.requesttype == 1)
+                {
+                    <tr style="background-color: rgb(95,188,97);">
+                        <td hidden>@request.requesttype</td>
+                        <td class="bg-transparent"> <p> @request.name </p> </td>
+                        <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
+                        <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
+                        <td class="bg-transparent"> <p> @request.reqdate </p> </td>
+                        <td class="bg-transparent"> <p> @request.phone </p> </td>
+                        <td class="bg-transparent"> <p> @request.address </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+
+                    </tr>
+                }
+                else if (request.requesttype == 2)
+                {
+                    <tr style="background-color: rgb(237,145,36)">
+                        <td hidden>@request.requesttype</td>
+                        <td class="bg-transparent"> <p> @request.name </p> </td>
+                        <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
+                        <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
+                        <td class="bg-transparent"> <p> @request.reqdate </p> </td>
+                        <td class="bg-transparent"> <p> @request.phone </p> </td>
+                        <td class="bg-transparent"> <p> @request.address </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td hidden>@request.requesttype</td>
+                    </tr>
+                }
+                else if (request.requesttype == 3)
+                {
+                    <tr style="background-color: rgb(0,127,198)">
+                        <td hidden>@request.requesttype</td>
+                        <td class="bg-transparent"> <p> @request.name </p> </td>
+                        <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
+                        <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
+                        <td class="bg-transparent"> <p> @request.reqdate </p> </td>
+                        <td class="bg-transparent"> <p> @request.phone </p> </td>
+                        <td class="bg-transparent"> <p> @request.address </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td hidden>@request.requesttype</td>
+                    </tr>
+                }
+                else if (request.requesttype == 4)
+                {
+                    <tr style="background-color: #e26277">
+                        <td hidden>@request.requesttype</td>
+                        <td class="bg-transparent"> <p> @request.name </p> </td>
+                        <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
+                        <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
+                        <td class="bg-transparent"> <p> @request.reqdate </p> </td>
+                        <td class="bg-transparent"> <p> @request.phone </p> </td>
+                        <td class="bg-transparent"> <p> @request.address </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td class="bg-transparent"> <p> Test </p> </td>
+                        <td hidden>@request.requesttype</td>
+                    </tr>
+                }
             }
-            else if(request.requesttype == 2)
-            {
-                <tr class="d-none d-xl-table-row d-md-table-row" style="background-color: rgb(237,145,36)">
-                    <td class="bg-transparent"> <p> @request.name </p> </td>
-                    <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
-                    <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
-                    <td class="bg-transparent"> <p> @request.reqdate </p> </td>
-                    <td class="bg-transparent"> <p> @request.phone </p> </td>
-                    <td class="bg-transparent"> <p> @request.address </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                </tr>
-            }
-            else if (request.requesttype == 3)
-            {
-                <tr class="d-none d-xl-table-row d-md-table-row" style="background-color: rgb(0,127,198)">
-                    <td class="bg-transparent"> <p> @request.name </p> </td>
-                    <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
-                    <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
-                    <td class="bg-transparent"> <p> @request.reqdate </p> </td>
-                    <td class="bg-transparent"> <p> @request.phone </p> </td>
-                    <td class="bg-transparent"> <p> @request.address </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                </tr>
-            }
-            else if (request.requesttype == 4)
-            {
-                <tr class="d-none d-xl-table-row d-md-table-row" style="background-color: #e26277">
-                    <td class="bg-transparent"> <p> @request.name </p> </td>
-                    <td class="bg-transparent"> <p> @request.dobdate/@request.dobmonth/@request.dobyear </p> </td>
-                    <td class="bg-transparent"> <p> Patient @request.requestor </p> </td>
-                    <td class="bg-transparent"> <p> @request.reqdate </p> </td>
-                    <td class="bg-transparent"> <p> @request.phone </p> </td>
-                    <td class="bg-transparent"> <p> @request.address </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                    <td class="bg-transparent"> <p> Test </p> </td>
-                </tr>
-            }
+            
 
         }
-        
-            
         </tr>
 
         <tr class="d-block d-xl-none d-lg-none d-md-none">

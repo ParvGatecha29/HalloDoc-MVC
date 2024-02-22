@@ -16,7 +16,8 @@ public class AdminDashboardController : Controller
 
     public IActionResult AdminDashboard()
     {
-        return View(_adminDashboardService.GetRequests());
+        var dash = _adminDashboardService.GetRequests();
+        return View(dash);
     }
 
     

@@ -1,5 +1,40 @@
-﻿@{
+﻿@model List<HalloDocDAL.Model.AdminDashboardData>
+@{
     Layout = "_adminDash";
+    int newCase= 0;
+    int pendingCase= 0;
+    int activeCase= 0;
+    int concludeCase= 0;
+    int toCloseCase= 0;
+    int unpaidCase= 0;
+
+    foreach(var req in Model)
+    {
+        if(req.status == 1)
+        {
+            newCase++;
+        }
+        else if (req.status == 2)
+        {
+            pendingCase++;
+        }
+        else if (req.status == 4 || req.status == 5)
+        {
+            activeCase++;
+        }
+        else if (req.status == 6)
+        {
+            concludeCase++;
+        }
+        else if (req.status == 3 || req.status == 7 || req.status == 8)
+        {
+            toCloseCase++;
+        }
+        else if (req.status == 9)
+        {
+            unpaidCase++;
+        }
+    }
 }
 
 <ul class="nav nav-justified m-2 d-flex flex-wrap" id="dashboard_tab" role="tablist">
@@ -10,7 +45,9 @@
                     <span></span>
                     <span class="ms-2">NEW</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">
+                    @newCase
+                </div>
             </div>
         </button>
         <div class=" d-none d-md-flex justify-content-center text-align-center w-100 align-items-center">
@@ -27,7 +64,7 @@
                     </svg>
                     <span class="ms-2">PENDING</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">@pendingCase</div>
             </div>
         </button>
         <div class="justify-content-center text-align-center w-100 d-none d-md-flex align-items-center">
@@ -44,7 +81,7 @@
                     </svg>
                     <span class="ms-2">ACTIVE</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">@activeCase</div>
             </div>
         </button>
         <div class="justify-content-center text-align-center w-100 d-none d-md-flex align-items-center">
@@ -62,7 +99,7 @@
                     </svg>
                     <span class="ms-2">CONCLUDE</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">@concludeCase</div>
             </div>
         </button>
         <div class="justify-content-center text-align-center w-100 d-none d-md-flex align-items-center">
@@ -79,7 +116,7 @@
                     </svg>
                     <span class="ms-2 d-flex flex-nowrap">TO CLOSE</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">@toCloseCase</div>
             </div>
         </button>
         <div class="justify-content-center text-align-center w-100 d-none d-md-flex align-items-center">
@@ -96,7 +133,7 @@
                     </svg>
                     <span class="ms-2">UNPAID</span>
                 </div>
-                <div class="text-start fs-3 fw-bold">1452</div>
+                <div class="text-start fs-3 fw-bold">@unpaidCase</div>
             </div>
         </button>
         <div class="justify-content-center text-align-center w-100 d-none d-md-flex align-items-center">
@@ -155,4 +192,35 @@
         const newTabButton = document.getElementById('new-tab');
         newTabButton.click();
     });
+
+    function filterrequests(reqtype) {
+        table = document.getElementsByClassName("caseTable");
+        for (j = 0; j < table.length; j++) {
+            tr = table[j].getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    intValue = td.innerText;
+                    //indexOf will return the position of first matched character
+                    if (intValue == reqtype) {
+                        tr[i].style.display = "";
+                    }
+                    else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+    function allrequests() {
+        table = document.getElementsByClassName("caseTable");
+        for (i = 0; i < table.length; i++) {
+            tr = table[i].getElementsByTagName("tr");
+            for (j = 0; j < tr.length; j++) {
+                tr[j].style.display = "";
+            }
+        }
+        
+    }
 </script>

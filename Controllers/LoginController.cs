@@ -89,10 +89,11 @@ public class LoginController : Controller
     public async Task<JsonResult> SendResetEmail(string toEmail)
     {
         var token = _tokenService.GenerateToken(toEmail);
+        _tokenService.StoreToken(toEmail, token);
         var link = "https://localhost:44319/Login/ResetPassword?token="+token;
         var subject = "Reset Your Password";
         var body = $"Please reset your password by clicking <a href='{link}'>here</a>.";
-
+        
         _emailService.SendEmail(toEmail, subject, body);
         return Json(new { success = true, redirectUrl = @Url.Action("PatientLogin", "Login") });
     }
@@ -104,6 +105,7 @@ public class LoginController : Controller
         if (isValid && model.password == model.confirmpassword)
         {
             var user = await _userService.CheckUser(email);
+            user.Passwordhash = model.confirmpassword;
             await _userService.EditAspNetUser(user);
             return Json(new { success = true, redirectUrl = @Url.Action("PatientLogin", "Login") });
         }
