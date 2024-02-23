@@ -10,6 +10,8 @@ using HalloDocBAL.Interfaces;
 using HalloDoc.Views.Home;
 using Microsoft.VisualBasic;
 using Microsoft.AspNetCore.Http;
+using HalloDocBAL.Services;
+using NuGet.Common;
 
 namespace HalloDoc.Controllers;
 
@@ -17,13 +19,15 @@ public class SubmitRequestController : Controller
 {
     private readonly IUserService _userService;
     private readonly IRequestService _requestService;
+    private readonly IEmailService _emailService;
 
 
-    public SubmitRequestController(IUserService userService, IRequestService requestService)
+
+    public SubmitRequestController(IUserService userService, IRequestService requestService, IEmailService emailService)
     {
-        
         _userService = userService;
         _requestService = requestService;
+        _emailService = emailService;
     }
 
 
@@ -137,14 +141,19 @@ public class SubmitRequestController : Controller
         model.zipcode = formcollection["zip"];
         model.room = formcollection["roomNum"];
         model.typeid = 2;
-        
 
-            await _requestService.PatientRequest(model);
+        var user = await _userService.CheckUser(model.email);
+        if (user == null)
+        {
+            var link = "https://localhost:44319/Login/PatientCreate";
+            var subject = "Register Yourself";
+            var body = $"Please register yourself <a href='{link}'>here</a>.";
+
+            _emailService.SendEmail(model.email, subject, body);
+        }
+        await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
-        
-
-        
     }
 
     [HttpPost]
@@ -152,6 +161,15 @@ public class SubmitRequestController : Controller
     {
         if (ModelState.IsValid)
         {
+            var user = await _userService.CheckUser(model.email);
+            if (user == null)
+            {
+                var link = "https://localhost:44319/Login/PatientCreate";
+                var subject = "Register Yourself";
+                var body = $"Please register yourself <a href='{link}'>here</a>.";
+
+                _emailService.SendEmail(model.email, subject, body);
+            }
             await _requestService.ConciergeRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
@@ -165,6 +183,15 @@ public class SubmitRequestController : Controller
     {
         if (ModelState.IsValid)
         {
+            var user = await _userService.CheckUser(model.email);
+            if (user == null)
+            {
+                var link = "https://localhost:44319/Login/PatientCreate";
+                var subject = "Register Yourself";
+                var body = $"Please register yourself <a href='{link}'>here</a>.";
+
+                _emailService.SendEmail(model.email, subject, body);
+            }
             await _requestService.BusinessRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });

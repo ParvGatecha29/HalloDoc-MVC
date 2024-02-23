@@ -27,6 +27,10 @@ public class LoginController : Controller
 
     public IActionResult PatientLogin()
     {
+        if(HttpContext.Session.GetString("email") != null)
+        {
+            return RedirectToAction("PatientDashboard", "PatientDashboard");
+        }
         return View();
     }
 

@@ -80,7 +80,8 @@ label,
 .iti__country-list,
 li,
 .bgdiv,
-table{
+table,
+.theme-background{
   background: var(--bkg-color) !important;
 }
 
@@ -100,7 +101,8 @@ i,
 .iti__country-list,
 li,
 .bgdiv,
-table {
+table,
+.theme-color{
   color: var(--text-color) !important;
 }
 
@@ -574,4 +576,9 @@ textarea:focus {
 
 .normal-input:focus {
     border: 1px solid rgb(145,105,179) !important;
+}
+
+.dropdown-menu {
+    --bs-dropdown-bg: transparent;
+    --bs-dropdown-link-hover-bg: grey;
 }

@@ -81,7 +81,7 @@
 
         <div class="">
             <div class="mx-3">
-                <p class="text-secondary">Patient Name</p>
+                <p class="text-secondary" id="name">Patient Name</p>
                 <p class="fs-4 fw-semibold text-info"> Testing Test </p>
                 <p class="text-secondary"> Check here for any files that you or the doctors of your subsequents reqestors have attached for you to review. </p>
                 <form enctype="multipart/form-data" id="form">
@@ -157,6 +157,8 @@ $("#selectAll").change(function () {
 </script>
 <script>
     $('#welcome').html('@Model.user.Firstname');
+    $('#name').html('@Model.user.Firstname');
+
     $('#logout').click(function () {
         window.location.href = '@Url.Action("Logout","Login")';
     });

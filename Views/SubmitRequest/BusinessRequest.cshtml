@@ -38,33 +38,38 @@
             <h6 class="py-3">Business Information</h6>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cfname" placeholder=" ">
+                    <div class="form-floating mb-3 required">
+                        <input type="text" class="form-control" id="cfname" placeholder=" " required>
                         <label for="fname" class=" floating-label">First Name</label>
+                        <span style="color:red; display:none">Required!</span>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3 required">
                         <input type="text" class="form-control" id="clname" placeholder=" ">
                         <label for="lname" class=" floating-label">Last Name</label>
+                        <span style="color:red; display:none">Required!</span>
                     </div>
                 </div>
                 <div class="col-md-6 z-3">
-                    <div class="form-floating mb-3 h-100">
+                    <div class="form-floating mb-3 h-100 required">
                         <input type="tel" class="form-control w-100 h-100" id="ctel"
                                placeholder="Phone Number">
+                        <span style="color:red; display:none">Required!</span>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3 required">
                         <input type="email" class="form-control" id="cEmail" placeholder=" ">
                         <label for="patientEmail" class=" floating-label">Email address</label>
+                        <span style="color:red; display:none">Required!</span>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3 required">
                         <input type="text" class="form-control" id="propbus" placeholder=" ">
                         <label for="relation" class=" floating-label">Business/Property Name</label>
+                        <span style="color:red; display:none">Required!</span>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -85,63 +90,72 @@
             <div class="container-fluid mt-3 p-0">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="text" class="form-control" id="fname" placeholder=" ">
                             <label for="fname" class=" floating-label">First Name</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="text" class="form-control" id="lname" placeholder=" ">
                             <label for="lname" class=" floating-label">Last Name</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="date" class="form-control" id="dob" placeholder=" ">
                             <label for="dob" class=" floating-label">Date of Birth</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                         <h6 class="py-3">Patient Contact Information</h6>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="email" class="form-control" id="patientEmail" placeholder=" ">
                             <label for="patientEmail" class=" floating-label">Email address</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
 
                     </div>
                     <div class="col-md-6 z-3">
-                        <div class="form-floating mb-3 h-100">
+                        <div class="form-floating mb-3 h-100 required">
                             <input type="tel" class="form-control h-100" id="patientTel" placeholder="Phone Number">
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <h6 class="py-3">Patient Location</h6>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="text" class="form-control" id="street" placeholder=" ">
                             <label for="street" class=" floating-label">Street</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="text" class="form-control" id="city" placeholder=" ">
                             <label for="city" class=" floating-label">City</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="text" class="form-control" id="state" placeholder=" ">
                             <label for="state" class=" floating-label">State</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 required">
                             <input type="number" class="form-control" id="zip" placeholder=" ">
                             <label for="zip" class=" floating-label">Zip Code</label>
+                            <span style="color:red; display:none">Required!</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -230,30 +244,48 @@
                 typeid: 4
             };
 
-            $.ajax({
-                url: '@Url.Action("BusRequest","SubmitRequest")',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function (result) {
-                    if (result.success) {
-                        Swal.fire({
-                            title: "Good job!",
-                            text: "Request created succesfully",
-                            icon: "success"
-                        }).finally(() => {
-                            window.location.href = result.redirectUrl;
-                        });
+            var validate = true;
+            $('.required').each(function () {
+                var div = $(this);
+                if ($(div).find('input').val() == "") {
+                    Swal.fire({
+                        title: "Information required",
+                        text: "Please enter all the details",
+                        icon: "error"
+                    });
+                    var span = $(div).children('span');
+                    span.show();
 
-                    }
-                    else {
-                        alert(result.message);
-                    }
-                },
-                error: function () {
-                    alert('An error occured');
+                    validate = false;
                 }
-            });
+            })
+
+            if (validate) {
+                $.ajax({
+                    url: '@Url.Action("BusRequest","SubmitRequest")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "Request created succesfully",
+                                icon: "success"
+                            }).finally(() => {
+                                window.location.href = result.redirectUrl;
+                            });
+
+                        }
+                        else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('An error occured');
+                    }
+                });
+            }
         });
     });
 </script>
