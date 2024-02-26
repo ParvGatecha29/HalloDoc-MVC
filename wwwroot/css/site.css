@@ -582,3 +582,7 @@ textarea:focus {
     --bs-dropdown-bg: transparent;
     --bs-dropdown-link-hover-bg: grey;
 }
+.table{
+    --bs-table-color: none;
+    --bs-table-bg: none;
+}
