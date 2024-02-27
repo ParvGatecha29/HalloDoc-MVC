@@ -61,7 +61,12 @@ public class AdminDashboardController : Controller
     }
     public IActionResult ViewNotes(int requestid)
     {
-        var dash = _adminDashboardService.GetRequestById(requestid);
+        var dash = _adminDashboardService.GetNotes(requestid);
         return View("ViewNotes", dash);
+    }
+    public JsonResult UpdateNotes(int requestid, string notes)
+    {
+        var dash = _adminDashboardService.UpdateNotes(requestid, notes);
+        return Json(new { success = true });
     }
 }

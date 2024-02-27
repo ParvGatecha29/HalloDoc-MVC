@@ -61,9 +61,9 @@
 
                 <div class="row">
                     <div class=" col-12 form-floating mb-3 ">
-                        <textarea class="form-control h-100 dclass" id="floatingInput" placeholder="Textarea" rows="3"
+                        <textarea class="form-control h-100" id="floatingInput" placeholder=" " rows="3"
                             disabled asp-for="@Model.notes" ></textarea>
-                        <label for="floatingInput" class="text-wrap ms-2">Patient Notes</label>
+                        <label for="floatingInput" class="floating-label text-wrap ms-2">Patient Notes</label>
                     </div>
                 </div>
                 <hr />
@@ -71,21 +71,21 @@
                     <div class="row">
 
                         <div class="form-floating mb-3 col-12 col-sm-6">
-                            <input type="text" class="form-control dclass" id="floatingInput" placeholder="John"
+                            <input type="text" class="form-control " id="floatingInput" placeholder="John"
                                 required disabled asp-for="@Model.firstName">
-                            <label for="floatingInput" class="ms-2 ">First Name</label>
+                            <label for="floatingInput" class="floating-label ms-2 ">First Name</label>
                         </div>
 
                         <div class="form-floating mb-3 col-12 col-sm-6">
-                            <input type="text" class="form-control dclass" id="floatingInput" placeholder="Wick"
+                            <input type="text" class="form-control " id="floatingInput" placeholder="Wick"
                                 disabled asp-for="@Model.lastName">
-                            <label for="floatingInput" class="ms-2 ">Last Name</label>
+                            <label for="floatingInput" class="floating-label ms-2 ">Last Name</label>
                         </div>
 
                         <div class="form-floating mb-3 col-12 col-sm-6">
-                            <input type="date" class="form-control dclass" id="floatingInput" placeholder="02-10-2002"
+                            <input type="date" class="form-control " id="floatingInput" placeholder="02-10-2002"
                                 disabled />
-                            <label for="floatingInput" class="ms-2 ">Date of Birth</label>
+                            <label for="floatingInput" class="floating-label ms-2 ">Date of Birth</label>
                         </div>
 
                         <div class="form-floating mb-3 col-12 col-sm-5">
@@ -108,7 +108,7 @@
                     <div class="form-floating mb-3 col-12 col-sm-6">
                         <input type="email" class="form-control emailInp dclass" id="floatingInput1"
                             mailto:placeholder="test@google.com" disabled asp-for="@Model.email">
-                        <label for="floatingInput" class="ms-2 ">Email</label>
+                        <label for="floatingInput" class="floating-label ms-2 ">Email</label>
                     </div>
                     @*
                     <div
@@ -130,15 +130,15 @@
 
 
                     <div class="form-floating mb-3 col-12 col-sm-6">
-                        <input type="text" class="form-control dclass" id="floatingInput" placeholder="Maryland"
+                        <input type="text" class="form-control " id="floatingInput" placeholder="Maryland"
                             disabled>
-                        <label for="floatingInput" class="ms-2 ">Region</label>
+                        <label for="floatingInput" class="floating-label ms-2 ">Region</label>
                     </div>
 
                     <div class="form-floating mb-3 col-12 col-sm-5">
-                        <input type="text" class="form-control dclass" id="floatingInput" placeholder="Maryland"
+                        <input type="text" class="form-control " id="floatingInput" placeholder="Maryland"
                             disabled asp-for="@Model.address">
-                        <label for="floatingInput" class="ms-2 ">Business Name / Address</label>
+                        <label for="floatingInput" class="ms-2 floating-label">Business Name / Address</label>
                     </div>
 
 
@@ -149,8 +149,8 @@
                     </div>
 
                     <div class="form-floating mb-3 col-12 col-sm-6">
-                        <input type="text" class="form-control dclass" id="floatingInput" placeholder="007" disabled>
-                        <label for="floatingInput" class="ms-2 ">Room #</label>
+                        <input type="text" class="form-control " id="floatingInput" placeholder="007" disabled>
+                        <label for="floatingInput" class="floating-label ms-2 ">Room #</label>
                     </div>
 
                 </div>
