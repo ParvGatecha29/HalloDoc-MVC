@@ -15,11 +15,15 @@
                 <div class="card bg-white rounded shadow border-0">
                     <div class="card-body">
                      <h6 class="card-title"><i class="fa-solid fa-arrow-right-arrow-left"></i>Transfer Notes</h6>
-                     @foreach(var note in Model.transferNotes)
+                    @if(Model.transferNotes != null)
                     {
+                        @foreach (var note in Model.transferNotes)
+                        {
 
-                        <p class="m-0">@note</p>
+                            <p class="m-0">@note</p>
+                        }
                     }
+                    
                 </div>
                 </div>
             </div>

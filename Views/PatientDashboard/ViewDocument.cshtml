@@ -82,7 +82,14 @@
         <div class="">
             <div class="mx-3">
                 <p class="text-secondary" id="name">Patient Name</p>
-                <p class="fs-4 fw-semibold text-info"> Testing Test </p>
+                <p class="fs-4 fw-semibold text-info"> @foreach(var item in Model.dashboards)
+                    {
+                        @if(Model.requests[0].Requestid == item.Requestid)
+                        {
+                            <span>@item.confirmationNo</span>
+                        }
+                    }
+                </p>
                 <p class="text-secondary"> Check here for any files that you or the doctors of your subsequents reqestors have attached for you to review. </p>
                 <form enctype="multipart/form-data" id="form">
                     <div class="d-flex">
@@ -118,7 +125,7 @@
             <table id="responsiveTable">
                 <thead class="tab">
                     <tr>
-                        
+                        <th><input type="checkbox" class="checkbox" id="selectAll" /></th>
                         <th> File Name</th>
                         <th class="mobile-hide">Uploader</th>
                         <th class="mobile-hide">Update Date</th>

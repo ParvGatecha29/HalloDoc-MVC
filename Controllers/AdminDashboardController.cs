@@ -69,4 +69,16 @@ public class AdminDashboardController : Controller
         var dash = _adminDashboardService.UpdateNotes(requestid, notes);
         return Json(new { success = true });
     }
+
+    public JsonResult CancelCase(int Requestid, string reason, string info)
+    {
+        var dash = new AdminDashboardData
+        {
+            requestId = Requestid,
+            reason = reason,
+            notes = info
+        };
+        _adminDashboardService.CancelRequest(dash);
+        return Json(new { success = true });
+    }
 }

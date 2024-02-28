@@ -110,7 +110,7 @@ public class SubmitRequestController : Controller
                 user.Mobile = model.phone;
                 await _userService.AddUser(user);
             }
-
+        model.userid = user.Userid;
             await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });

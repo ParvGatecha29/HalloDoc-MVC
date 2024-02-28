@@ -87,11 +87,14 @@
                                 disabled />
                             <label for="floatingInput" class="floating-label ms-2 ">Date of Birth</label>
                         </div>
-
-                        <div class="form-floating mb-3 col-12 col-sm-5">
-                            <input type="tel" class="phone form-control dclass" id="floatingInput"
-                                placeholder="1234567890" disabled asp-for="@Model.phone">
+                        <div class="col-12 col-sm-5 z-3">
+                            <div class="form-floating mb-3  h-100 ">
+                                <input type="tel" class="phone form-control dclass h-100" id="floatingInput"
+                                       placeholder=" " disabled asp-for="@Model.phone">
+                            </div>
                         </div>
+
+                        
 
                         <div class="form-floating mb-3 col-12 col-sm-1 ">
                             <button type="button" class="dclass btn btn-outline-dark border-info p-3 text-info w-100"style="height: 100%;">
@@ -159,11 +162,11 @@
 
                     <button type="button" class="btn text-white btn-info">View Notes</button>
 
-                    <button type="button" class="btn text-white btn-danger">Cancel</button>
+                    <button type="button" class="btn text-white btn-danger cancelcase">Cancel</button>
 
                 </div>
 
-                <div class="d-grid gap-2 d-flex justify-content-center justify-content-md-end mt-4 pt-4 mb-3">
+                @* <div class="d-grid gap-2 d-flex justify-content-center justify-content-md-end mt-4 pt-4 mb-3">
 
                 <button type="button" id="editBtn" class="btn btn-info text-white EditBtn"
                 onclick="enableFields()">Edit
@@ -173,14 +176,95 @@
 
                 <button type="button" id="cancelBtn" class="btn btn-outline-info EditBtn"
                 onclick="disableFields()">Cancel</button>
-                </div>
+                </div> *@
 
             </div>
         </div>
     </form>
 </div>
+<div class="modal fade" id="cancelcaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Confirm Cancellation</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" method="post">
+                    <p class="text-secondary"> Patient Name : <span class="text-info" id="cancelcaseName"> @Model.firstName @Model.lastName</span> </p>
+                    <input type="hidden" value="@Model.requestId" name="requestId" id="requestId" />
+                    <div class="form-group mb-3">
+                        <select class="form-control" id="reason" name="reason" placeholder=" " required>
+                            <option hidden value="">Reason for cancellation</option>
+                            <option>No Response to call or text</option>
+                            <option>Cost Issue</option>
+                            <option>Insurance Issue</option>
+                            <option>Out of service area</option>
+                            <option>Not appropriate for service</option>
+                            <option>Referral to Clinic or Hospital</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="mb-3 form-floating">
+                            <textarea class="form-control" placeholder="" id="info" style="height: 100px" name="info" required></textarea>
+                            <label for="info" class="floatingLabel"> Provide additional information </label>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-info text-white">Confirm</button>
+                        <button type="button" class="btn border border-info text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#form').on('submit', function (e) {
+            e.preventDefault();
+            var data = new FormData(this)
+
+            $.ajax({
+                url: '@Url.Action("CancelCase","AdminDashboard")',
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Request cancelled succesfully",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.reload();
+                        });
+
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occured');
+                }
+            });
+        });
+    });
+</script>
 
 <script>
+    $(document).on("click", ".cancelcase", function () {
+        $("#cancelcaseModal").modal('show');
+        // $("#cancelcaseName").text(@Model.firstName + @Model.lastName);
+        // $("#requestId").val(@Model.requestId);
+    });
+
+</script>
+@* <script>
 function disableFields() {
 document.querySelectorAll('.dclass').forEach(function (element) {
 element.disabled = true;
@@ -201,4 +285,4 @@ document.getElementById('cancelBtn').style.display = 'block';
 document.getElementById('editBtn').style.display = 'none';
 }
 disableFields();
-</script> 
+</script>  *@

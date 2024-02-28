@@ -168,13 +168,9 @@
 
     var today = year + "-" + month + "-" + day;
     document.getElementById("dob").value = today;
-    const phoneInputField = document.querySelectorAll("input[type='tel']");
-    for (var i = 0; i < phoneInputField.length; i++) {
-        const phoneInput = window.intlTelInput(phoneInputField[i], {
-            utilsScript:
-                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        })
-    };
+
+
+    
 </script>
 <div class="row ">
     <footer class="text-end bg-black">
