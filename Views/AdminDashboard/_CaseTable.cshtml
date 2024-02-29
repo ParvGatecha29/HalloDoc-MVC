@@ -1,10 +1,10 @@
-﻿@model List<HalloDocDAL.Model.AdminDashboardData>
+﻿@model HalloDocDAL.Model.AdminDashboard
 @{
     string[] colors = { "#60bc60", "#ee9125", "#007fc7", "#e36478", "#943db8" };
 
-    @if (Model != null && Model.Count > 0)
+    @if (Model.Data != null && Model.Data.Count > 0)
     {
-    @foreach (var item in Model)
+    @foreach (var item in Model.Data)
         {
     <div class="d-md-none">
                     <div class="bg-info-subtle " data-bs-toggle="collapse" data-bs-target="#collapseexample_@item.requestId"
@@ -69,7 +69,7 @@
                                 <i class="fa-regular fa-user fs-5 border border-1 border-info rounded-5 p-2 me-2"></i>
                                 <span class="fs-5">Requestor: @item.requestor</span>
                             </div>
-                            @if (Model[0].status == 1)
+                            @if (Model.Data[0].status == 1)
                         {
                                 <div class="d-flex flex-column mt-3 gap-3">
                                     <div class="d-flex gap-3 ">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                         }
-                            @if (Model[0].status == 2)
+                            @if (Model.Data[0].status == 2)
                         {
                                 <div class="d-flex flex-column mt-3 gap-3">
                                     <div class="d-flex gap-3 ">
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                         }
-                            @if (Model[0].status == 3)
+                            @if (Model.Data[0].status == 3)
                         {
                                 <div class="d-flex flex-column mt-3 gap-3">
                                     <div class="d-flex gap-3 ">
@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                         }
-                            @if (Model[0].status == 4 || Model[0].status == 4)
+                            @if (Model.Data[0].status == 4 || Model.Data[0].status == 4)
                         {
                                 <div class="d-flex flex-column mt-3 gap-3">
                                     <div class="d-flex gap-3 ">
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                         }
-                            @if (Model[0].status == 6)
+                            @if (Model.Data[0].status == 6)
                         {
                                 <div class="d-flex flex-column mt-3 gap-3">
                                     <div class="d-flex gap-3 ">
@@ -167,41 +167,41 @@
 
                             <th scope="col">Name</th>
 
-                            @if (Model[0].status == 1 || Model[0].status == 2 || Model[0].status == 3 || Model[0].status == 4 || Model[0].status == 5 || Model[0].status == 6 || Model[0].status == 7 || Model[0].status == 8)
+                            @if (Model.Data[0].status == 1 || Model.Data[0].status == 2 || Model.Data[0].status == 3 || Model.Data[0].status == 4 || Model.Data[0].status == 5 || Model.Data[0].status == 6 || Model.Data[0].status == 7 || Model.Data[0].status == 8)
                         {
                                 <th scope="col">Date Of Birth</th>
                         }
 
 
-                            @if (Model[0].status == 1 || Model[0].status == 2 || Model[0].status == 4 || Model[0].status == 5)
+                            @if (Model.Data[0].status == 1 || Model.Data[0].status == 2 || Model.Data[0].status == 4 || Model.Data[0].status == 5)
                         {
                                 <th scope="col">Requestor</th>
                         }
 
-                            @if (Model[0].status == 3 || Model[0].status == 7 || Model[0].status == 8)
+                            @if (Model.Data[0].status == 3 || Model.Data[0].status == 7 || Model.Data[0].status == 8)
                         {
                                 <th scope="col">Region</th>
                         }
 
-                            @if (Model[0].status == 1)
+                            @if (Model.Data[0].status == 1)
                         {
                                 <th scope="col">Requested Date</th>
                         }
 
-                            @if (Model[0].status == 9 || Model[0].status == 2 || Model[0].status == 3 || Model[0].status == 4 || Model[0].status == 5 || Model[0].status == 6 || Model[0].status == 7 || Model[0].status == 8)
+                            @if (Model.Data[0].status == 9 || Model.Data[0].status == 2 || Model.Data[0].status == 3 || Model.Data[0].status == 4 || Model.Data[0].status == 5 || Model.Data[0].status == 6 || Model.Data[0].status == 7 || Model.Data[0].status == 8)
                         {
                                 <th scope="col">Physician Name</th>
                                 <th scope="col">Date Of Service</th>
                         }
 
-                            @if (Model[0].status == 1 || Model[0].status == 2 || Model[0].status == 4 || Model[0].status == 5 || Model[0].status == 6 || Model[0].status == 9)
+                            @if (Model.Data[0].status == 1 || Model.Data[0].status == 2 || Model.Data[0].status == 4 || Model.Data[0].status == 5 || Model.Data[0].status == 6 || Model.Data[0].status == 9)
                         {
                                 <th scope="col">Phone</th>
                         }
 
                             <th scope="col">Address</th>
 
-                            @if (Model[0].status == 1 || Model[0].status == 2 || Model[0].status == 3 || Model[0].status == 4 || Model[0].status == 5 || Model[0].status == 7 || Model[0].status == 8)
+                            @if (Model.Data[0].status == 1 || Model.Data[0].status == 2 || Model.Data[0].status == 3 || Model.Data[0].status == 4 || Model.Data[0].status == 5 || Model.Data[0].status == 7 || Model.Data[0].status == 8)
                         {
                                 <th scope="col">Notes</th>
                         }
@@ -214,12 +214,12 @@
                     </thead>
                     <tbody class="w-100">
 
-                        @foreach (var obj in Model)
+                        @foreach (var obj in Model.Data)
                     {
                             <tr style="background-color:@colors[obj.requesttype - 1] !important; color:white !important" data-rid="@obj.requestId" class="align-middle">
                                 <td class="d-none">@obj.requesttype</td>
 
-                                <td name="Name">@obj.name</td>
+                                <td name="Name">@obj.firstName @obj.lastName</td>
 
                                 @if (obj.status == 1 || obj.status == 2 || obj.status == 3 || obj.status == 4 || obj.status == 5 || obj.status == 6 || obj.status == 7 || obj.status == 8)
                             {
@@ -243,36 +243,36 @@
 
                                 @if (obj.status == 9 || obj.status == 2 || obj.status == 3 || obj.status == 4 || obj.status == 5 || obj.status == 6 || obj.status == 7 || obj.status == 8)
                             {
-                                    <td>@obj.physician</td>
+                                    <td>@obj.pname</td>
                                     <td>DateOfService</td>
                             }
 
                                 @if (obj.status == 1 || obj.status == 2 || obj.status == 4 || obj.status == 5 || obj.status == 6 || obj.status == 9)
                             {
-                                <td>
-                                    <button type="button" class="btn btn-outline-light"><i class="bi bi-telephone text-white"></i>@obj.phone</button><br>(Patient)
-                                    @if(obj.cphone!= null)
+                                    <td>
+                                        <button type="button" class="btn btn-outline-light"><i class="bi bi-telephone text-white"></i>@obj.phone</button><br>(Patient)
+                                        @if (obj.cphone != null && obj.requesttype != 1)
                                     {
-                                        <br>
+                                            <br>
 
-                                        <button type="button" class="btn btn-outline-light"><i class="bi bi-telephone text-white"></i>@obj.cphone</button>
+                                            <button type="button" class="btn btn-outline-light"><i class="bi bi-telephone text-white"></i>@obj.cphone</button>
 
-                                        <br>
-                                        @if (obj.requesttype == 2)
+                                            <br>
+                                            @if (obj.requesttype == 2)
                                         {
-                                            <span>(Family/Friend)</span>
+                                                <span>(Family/Friend)</span>
                                         }
                                         else if (obj.requesttype == 3)
                                         {
-                                            <span>(Concierge)</span>
+                                                <span>(Concierge)</span>
                                         }
                                         else
                                         {
-                                            <span>(Business)</span>
+                                                <span>(Business)</span>
                                         }
                                     }
-                                    
-                                </td>
+
+                                    </td>
                             }
 
                                 <td>@obj.address</td>
@@ -304,11 +304,11 @@
                                                 Actions
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="action">
-                                            <li><a class="dropdown-item theme-color" href="#"><i class="fa-regular fa-clipboard"></i>Assign Case</a></li>
-                                            <li><a class="dropdown-item theme-color cancelcase"><i class="fa-regular fa-circle-xmark"></i> Cancel case</a></li>
-                                            <li><a class="dropdown-item theme-color" href="@Url.Action("ViewCase","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-regular fa-newspaper"></i> View Case</a></li>
-                                            <li><a class="dropdown-item theme-color" href="@Url.Action("ViewNotes","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-solid fa-notes-medical"></i> View Notes</a></li>
-                                            <li><a class="dropdown-item theme-color" href="#"><i class="fa-solid fa-ban"></i> Block Patient</a></li>
+                                                <li><a class="dropdown-item theme-color assigncase" href="#"><i class="fa-regular fa-clipboard"></i>Assign Case</a></li>
+                                                <li><a class="dropdown-item theme-color cancelcase"><i class="fa-regular fa-circle-xmark"></i> Cancel case</a></li>
+                                                <li><a class="dropdown-item theme-color" href="@Url.Action("ViewCase","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-regular fa-newspaper"></i> View Case</a></li>
+                                                <li><a class="dropdown-item theme-color" href="@Url.Action("ViewNotes","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-solid fa-notes-medical"></i> View Notes</a></li>
+                                                <li><a class="dropdown-item theme-color" href="#"><i class="fa-solid fa-ban"></i> Block Patient</a></li>
                                             </ul>
                                         </div>
                                 }
@@ -379,7 +379,7 @@
                                 </td>
 
                             </tr>
-                        
+
                     }
                     </tbody>
                 </table>
@@ -394,18 +394,18 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form" method="post">
+                <form id="formcancel" method="post">
                     <p class="text-secondary"> Patient Name : <span class="text-info" id="cancelcaseName"> </span> </p>
-                    <input type="hidden" value="" name="requestId" id="requestId"/>
+                    <input type="hidden" class="requestId" value="" name="requestId" id="requestId" />
                     <div class="form-group mb-3">
                         <select class="form-control" id="reason" name="reason" placeholder=" " required>
                             <option hidden value="">Reason for cancellation</option>
-                            <option>No Response to call or text</option>
-                            <option>Cost Issue</option>
-                            <option>Insurance Issue</option>
-                            <option>Out of service area</option>
-                            <option>Not appropriate for service</option>
-                            <option>Referral to Clinic or Hospital</option>
+                            <option value="1">No Response to call or text</option>
+                            <option value="2">Cost Issue</option>
+                            <option value="3">Insurance Issue</option>
+                            <option value="4">Out of service area</option>
+                            <option value="5">Not appropriate for service</option>
+                            <option value="6">Referral to Clinic or Hospital</option>
                         </select>
                     </div>
 
@@ -425,16 +425,63 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="assignCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Assign Request</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formassign" method="post">
+                    <p class="text-secondary"> To assign the request, search and select another physician </p>
+                    <input type="hidden" class="requestId" value="" name="requestId" id="requestId" />
+                    <div class="form-group mb-3">
+                        <select class="form-control" id="regionSelect" name="regionSelect" placeholder=" " required>
+                            <option hidden value="">Region</option>
+                            @foreach(var region in Model.regions)
+                            {
+                                <option value="@region.Regionid">@region.Name</option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <select class="form-control" id="physicianSelect" name="physicianSelect" placeholder=" " required>
+                            <option hidden value="">Physician</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="mb-3 form-floating">
+                            <textarea class="form-control" placeholder="" id="info" style="height: 100px" name="info" required></textarea>
+                            <label for="info" class="floatingLabel"> Provide additional information </label>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-info text-white">Confirm</button>
+                        <button type="button" class="btn border border-info text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
-        $('#form').on('submit',function (e) {
+       
+        $('#formcancel').on('submit', function (e) {
             e.preventDefault();
             var data = new FormData(this)
 
             $.ajax({
                 url: '@Url.Action("CancelCase","AdminDashboard")',
                 type: 'POST',
-                data: data, 
+                data: data,
                 processData: false,
                 contentType: false,
                 success: function (result) {
@@ -446,7 +493,62 @@
                         }).finally(() => {
                             window.location.reload();
                         });
-                        
+
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occured');
+                }
+            });
+        });
+
+
+
+        $('#regionSelect').change(function () {
+            var selectedRegion = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetPhysiciansByRegion","AdminDashboard")',
+                type: 'POST',
+                data: { region: selectedRegion },
+                success: function (data) {
+                    var physicianSelect = $('#physicianSelect');
+                    physicianSelect.empty().append('<option value="">Select Physician</option>');
+                    $.each(data, function (i, physician) {
+                        physicianSelect.append($('<option>', {
+                            value: physician.Physicianid,
+                            text: physician.Firstname
+                        }));
+                    });
+                },
+                error: function (error) {
+                    console.error('Error fetching Physicians:', error)
+                }
+            });
+        });
+
+        $('#formassign').on('submit', function (e) {
+            e.preventDefault();
+            var data = new FormData(this)
+
+            $.ajax({
+                url: '@Url.Action("AssignCase","AdminDashboard")',
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Request assigned succesfully",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.reload();
+                        });
+
                     }
                     else {
                         alert(result.message);
@@ -458,13 +560,20 @@
             });
         });
     });
+
+
 </script>
 
 <script>
-    $(document).on("click", ".cancelcase", function () { 
+    $(document).on("click", ".cancelcase", function () {
         $("#cancelcaseModal").modal('show');
         $("#cancelcaseName").text($(this).closest('tr').find("td[name='Name']").text());
-        $("#requestId").val($(this).closest('tr').data('rid'));
+        $(".requestId").val($(this).closest('tr').data('rid'));
+    });
+
+    $(document).on("click", ".assigncase", function () {
+        $("#assignCaseModal").modal('show');
+        $(".requestId").val($(this).closest('tr').data('rid'));
     });
 
 </script>

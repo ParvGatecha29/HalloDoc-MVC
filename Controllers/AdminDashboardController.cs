@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HalloDocDAL.Model;
 using HalloDocBAL.Interfaces;
+using HalloDocDAL.Models;
 
 namespace HalloDoc.Controllers;
 
@@ -26,32 +27,44 @@ public class AdminDashboardController : Controller
     }
     public IActionResult NewCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(newcase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(newcase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable",dash);
     }
     public IActionResult PendingCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(pendingcase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(pendingcase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable", dash);
     }
     public IActionResult ActiveCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(activecase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(activecase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable", dash);
     }
     public IActionResult ConcludeCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(concludecase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(concludecase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable", dash);
     }
     public IActionResult ToCloseCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(toclosecase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(toclosecase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable", dash);
     }
     public IActionResult UnpaidCasePartial()
     {
-        var dash = _adminDashboardService.GetRequestsByStatus(unpaidcase);
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequestsByStatus(unpaidcase);
+        dash.regions = _adminDashboardService.GetAllRegions();
         return PartialView("_CaseTable", dash);
     }
     public IActionResult ViewCase(int requestid)
@@ -79,6 +92,24 @@ public class AdminDashboardController : Controller
             notes = info
         };
         _adminDashboardService.CancelRequest(dash);
+        return Json(new { success = true });
+    }
+
+    public ActionResult<IEnumerable<Physician>> GetPhysiciansByRegion(int region)
+    {
+        var physicians = _adminDashboardService.GetPhysiciansByRegion(region);
+        return physicians;
+    }
+
+    public JsonResult AssignCase(int Requestid, int physicianSelect, string info)
+    {
+        var dash = new AdminDashboardData
+        {
+            requestId = Requestid,
+            physicianId = physicianSelect,
+            notes = info
+        };
+        _adminDashboardService.AssignRequest(dash);
         return Json(new { success = true });
     }
 }

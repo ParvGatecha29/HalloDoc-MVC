@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-md-6 z-3">
                     <div class="form-floating mb-3 h-100 required">
-                        <input type="tel" class="form-control w-100 h-100" id="cTel"
+                        <input type="tel" class="form-control w-100 h-100" id="ctel"
                                placeholder="Phone Number">
                         <span style="color:red; display:none">Required!</span>
                     </div>
@@ -260,7 +260,7 @@
                     url: '@Url.Action("ConRequest","SubmitRequest")',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: { email: email },
+                    data: JSON.stringify(data),
                     success: function (result) {
                         if (result.success) {
                             Swal.fire({
