@@ -12,6 +12,7 @@ using Microsoft.VisualBasic;
 using Microsoft.AspNetCore.Http;
 using HalloDocBAL.Services;
 using NuGet.Common;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace HalloDoc.Controllers;
 
@@ -88,6 +89,8 @@ public class SubmitRequestController : Controller
         model.room = formcollection["roomNum"];
         model.typeid = 1;
         model.document = formcollection.Files;
+        if(!_userService.IsUserBlocked(model.email, model.phone))
+        {
             var aspuser = new Aspnetuser();
             var user = new User();
             if (!(await CheckEmailExists(model.email) == Json(false)))
@@ -110,11 +113,13 @@ public class SubmitRequestController : Controller
                 user.Mobile = model.phone;
                 await _userService.AddUser(user);
             }
-        model.userid = user.Userid;
+            model.userid = user.Userid;
             await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
-        
+        }
+
+        return Json(new { success = false, message = "User is blocked" });
     }
 
     [HttpPost]
@@ -141,25 +146,7 @@ public class SubmitRequestController : Controller
         model.zipcode = formcollection["zip"];
         model.room = formcollection["roomNum"];
         model.typeid = 2;
-
-        var user = await _userService.CheckUser(model.email);
-        if (user == null)
-        {
-            var link = "https://localhost:44319/Login/PatientCreate";
-            var subject = "Register Yourself";
-            var body = $"Please register yourself <a href='{link}'>here</a>.";
-
-            _emailService.SendEmail(model.email, subject, body);
-        }
-        await _requestService.PatientRequest(model);
-
-            return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
-    }
-
-    [HttpPost]
-    public async Task<JsonResult> ConRequest([FromBody] Req model)
-    {
-        if (ModelState.IsValid)
+        if (!_userService.IsUserBlocked(model.cemail, model.cphone))
         {
             var user = await _userService.CheckUser(model.email);
             if (user == null)
@@ -170,9 +157,34 @@ public class SubmitRequestController : Controller
 
                 _emailService.SendEmail(model.email, subject, body);
             }
-            await _requestService.ConciergeRequest(model);
+            await _requestService.PatientRequest(model);
 
             return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
+        }
+        return Json(new { success = false, message = "User is blocked" });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ConRequest([FromBody] Req model)
+    {
+        if (ModelState.IsValid)
+        {
+            if (!_userService.IsUserBlocked(model.cemail, model.cphone))
+            {
+                var user = await _userService.CheckUser(model.email);
+                if (user == null)
+                {
+                    var link = "https://localhost:44319/Login/PatientCreate";
+                    var subject = "Register Yourself";
+                    var body = $"Please register yourself <a href='{link}'>here</a>.";
+
+                    _emailService.SendEmail(model.email, subject, body);
+                }
+                await _requestService.ConciergeRequest(model);
+
+                return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
+            }
+            return Json(new { success = false, message = "User is blocked" });
         }
 
         return Json(new { success = false, message = "Invalid Input" });
@@ -183,18 +195,22 @@ public class SubmitRequestController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _userService.CheckUser(model.email);
-            if (user == null)
+            if (!_userService.IsUserBlocked(model.cemail, model.cphone))
             {
-                var link = "https://localhost:44319/Login/PatientCreate";
-                var subject = "Register Yourself";
-                var body = $"Please register yourself <a href='{link}'>here</a>.";
+                var user = await _userService.CheckUser(model.email);
+                if (user == null)
+                {
+                    var link = "https://localhost:44319/Login/PatientCreate";
+                    var subject = "Register Yourself";
+                    var body = $"Please register yourself <a href='{link}'>here</a>.";
 
-                _emailService.SendEmail(model.email, subject, body);
+                    _emailService.SendEmail(model.email, subject, body);
+                }
+                await _requestService.BusinessRequest(model);
+
+                return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
             }
-            await _requestService.BusinessRequest(model);
-
-            return Json(new { success = true, redirectUrl = Url.Action("SubmitRequest", "SubmitRequest") });
+            return Json(new { success = false, message = "User is blocked" });
         }
 
         return Json(new { success = false, message = "Invalid Input" });

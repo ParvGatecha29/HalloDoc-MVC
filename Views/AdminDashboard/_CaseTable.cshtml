@@ -164,9 +164,9 @@
                     <thead class="w-100">
                         <tr>
                             <th class="d-none" scope="col">RequestType</th>
-
-                            <th scope="col">Name</th>
-
+                            <th class="d-none" scope="col">RegionId</th>
+                            <th scope="col" colspan="2">Name</th>
+                            
                             @if (Model.Data[0].status == 1 || Model.Data[0].status == 2 || Model.Data[0].status == 3 || Model.Data[0].status == 4 || Model.Data[0].status == 5 || Model.Data[0].status == 6 || Model.Data[0].status == 7 || Model.Data[0].status == 8)
                         {
                                 <th scope="col">Date Of Birth</th>
@@ -218,9 +218,15 @@
                     {
                             <tr style="background-color:@colors[obj.requesttype - 1] !important; color:white !important" data-rid="@obj.requestId" class="align-middle">
                                 <td class="d-none">@obj.requesttype</td>
-
+                                <td class="d-none">@obj.regionId</td>
                                 <td name="Name">@obj.firstName @obj.lastName</td>
-
+                            <td>
+                                <a type="button" class="btn border border-light text-light" href="mailto:@obj.email">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                    </svg>
+                                </a>
+                            </td>
                                 @if (obj.status == 1 || obj.status == 2 || obj.status == 3 || obj.status == 4 || obj.status == 5 || obj.status == 6 || obj.status == 7 || obj.status == 8)
                             {
                                     <td>@obj.dobdate/@obj.dobmonth/@obj.dobyear</td>
@@ -308,7 +314,7 @@
                                                 <li><a class="dropdown-item theme-color cancelcase"><i class="fa-regular fa-circle-xmark"></i> Cancel case</a></li>
                                                 <li><a class="dropdown-item theme-color" href="@Url.Action("ViewCase","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-regular fa-newspaper"></i> View Case</a></li>
                                                 <li><a class="dropdown-item theme-color" href="@Url.Action("ViewNotes","AdminDashboard",new{requestid = @obj.requestId})"><i class="fa-solid fa-notes-medical"></i> View Notes</a></li>
-                                                <li><a class="dropdown-item theme-color" href="#"><i class="fa-solid fa-ban"></i> Block Patient</a></li>
+                                                <li><a class="dropdown-item theme-color blockcase" href="#"><i class="fa-solid fa-ban"></i> Block Patient</a></li>
                                             </ul>
                                         </div>
                                 }
@@ -471,6 +477,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="blockcaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Block Case</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formblock" method="post">
+                    <p class="text-secondary"> Patient Name : <span class="text-info" id="blockcaseName"> </span> </p>
+                    <input type="hidden" class="requestId" value="" name="requestId" id="requestId" />
+
+                    <div class="form-group mb-3">
+                        <div class="mb-3 form-floating">
+                            <textarea class="form-control" placeholder="" id="info" style="height: 100px" name="info" required></textarea>
+                            <label for="info" class="floatingLabel"> Provide additional information </label>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-info text-white">Confirm</button>
+                        <button type="button" class="btn border border-info text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function () {
        
@@ -559,6 +595,38 @@
                 }
             });
         });
+
+
+        $('#formblock').on('submit', function (e) {
+            e.preventDefault();
+            var data = new FormData(this)
+
+            $.ajax({
+                url: '@Url.Action("BlockCase","AdminDashboard")',
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "Request blocked",
+                            icon: "success"
+                        }).finally(() => {
+                            window.location.reload();
+                        });
+
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occured');
+                }
+            });
+        });
     });
 
 
@@ -573,6 +641,11 @@
 
     $(document).on("click", ".assigncase", function () {
         $("#assignCaseModal").modal('show');
+        $(".requestId").val($(this).closest('tr').data('rid'));
+    });
+
+    $(document).on("click", ".blockcase", function () {
+        $("#blockcaseModal").modal('show');
         $(".requestId").val($(this).closest('tr').data('rid'));
     });
 

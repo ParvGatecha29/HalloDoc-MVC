@@ -586,3 +586,7 @@ textarea:focus {
     --bs-table-color: none;
     --bs-table-bg: none;
 }
+
+.region-filter {
+    display: none !important;
+}

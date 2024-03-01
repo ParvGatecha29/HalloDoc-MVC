@@ -241,7 +241,11 @@
 
                             }
                             else {
-                                alert(result.message);
+                                Swal.fire({
+                                    title: "Oopss...",
+                                    text: result.message,
+                                    icon: "error"
+                                })
                             }
                         },
                         error: function () {

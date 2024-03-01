@@ -3,26 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 using HalloDocDAL.Model;
 using HalloDocBAL.Interfaces;
 using HalloDocDAL.Models;
+using HalloDocBAL.Services;
 
 namespace HalloDoc.Controllers;
 
 public class AdminDashboardController : Controller
 {
     private readonly IAdminDashboardService _adminDashboardService;
+    private readonly IEmailService _emailService;
     int[] newcase = { 1 };
     int[] pendingcase = { 2 };
     int[] activecase = { 4,5 };
     int[] concludecase = { 6 };
     int[] toclosecase = { 3,7,8 };
     int[] unpaidcase = { 9 };
-    public AdminDashboardController(IAdminDashboardService adminDashboardService)
+    public AdminDashboardController(IAdminDashboardService adminDashboardService, IEmailService emailService)
     {
         _adminDashboardService = adminDashboardService;
+        _emailService = emailService;
     }
 
     public IActionResult AdminDashboard()
     {
-        var dash = _adminDashboardService.GetRequests();
+        var dash = new AdminDashboard();
+        dash.Data = _adminDashboardService.GetRequests();
+        dash.regions = _adminDashboardService.GetAllRegions();
         return View(dash);
     }
     public IActionResult NewCasePartial()
@@ -110,6 +115,28 @@ public class AdminDashboardController : Controller
             notes = info
         };
         _adminDashboardService.AssignRequest(dash);
+        return Json(new { success = true });
+    }
+
+    public JsonResult BlockCase(int Requestid,string info)
+    {
+        var dash = new AdminDashboardData
+        {
+            requestId = Requestid,
+            notes = info
+        };
+        _adminDashboardService.BlockRequest(dash);
+        return Json(new { success = true });
+    }
+
+    public JsonResult SendLink(IFormCollection formcollection)
+    {
+        var email = formcollection["email"];
+        var link = "https://localhost:44319/SubmitRequest/SubmitRequest";
+        var subject = "Submit Request";
+        var body = $"You can submit a request <a href='{link}'>here</a>.";
+
+        _emailService.SendEmail(email, subject, body);
         return Json(new { success = true });
     }
 }
